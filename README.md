@@ -49,74 +49,65 @@ bike-marketplace/
 ├── .gitignore                # Chặn node_modules và .env
 ├── LICENSE                   # Giấy phép MIT
 └── README.md                 # Tài liệu dự án
-🔄 3. Quy Trình Làm Việc Git (Bắt Buộc)
-Nhánh main là nhánh sản phẩm cuối cùng. Tuyệt đối không ai được push trực tiếp lên main.
 
-Cập nhật: git checkout main -> git pull origin main.
+```
+## 🔄 3. Quy Trình Làm Việc Git (Bắt Buộc)
 
-Nhánh tính năng: git checkout -b feature/ten-chuc-nang (VD: feature/api-tao-don-hang).
+Nhánh `main` là nhánh sản phẩm cuối cùng. **Tuyệt đối không một ai được quyền `push` trực tiếp lên nhánh `main`.**
 
-Commit: git add . -> git commit -m "feat: Nội dung rõ ràng".
+* **1. Cập nhật:** Trước khi code, luôn đồng bộ hóa dự án.
+    * `git checkout main`
+    * `git pull origin main`
+* **2. Nhánh tính năng:** Mọi tính năng phải được phát triển trên nhánh riêng biệt.
+    * `git checkout -b feature/ten-chuc-nang` *(VD: `feature/api-tao-don-hang`)*
+* **3. Commit:** Lưu lịch sử với thông điệp rõ ràng, có tiền tố phân loại.
+    * `git add .`
+    * `git commit -m "feat: Nội dung công việc rõ ràng"`
+* **4. Push:** Đẩy nhánh cá nhân lên kho lưu trữ từ xa.
+    * `git push origin feature/ten-chuc-nang`
+* **5. Merge:** Truy cập Github để tạo **Pull Request (PR)**.
+    * *Quy tắc thép:* Chỉ Nhóm trưởng mới có quyền Review (đọc kiểm tra code) và bấm Merge. Nếu xảy ra conflict, người làm tính năng đó phải tự resolve dưới máy local trước khi PR được duyệt.
 
-Push: git push origin feature/ten-chuc-nang.
+---
 
-Merge: Tạo Pull Request (PR) trên Github. Chỉ Nhóm trưởng được quyền Review và Merge code.
+## 👥 4. Phân Công Nhiệm Vụ & Ràng Buộc (Contracts)
 
-👥 4. Phân Công Nhiệm Vụ & Ràng Buộc (Contracts)
-Để đảm bảo tính toàn vẹn của mô hình C2C, các thành viên bắt buộc tuân thủ các quy tắc sau. Định dạng API BE luôn phải là: { success: boolean, message: string, data: any }.
+Để đảm bảo tính toàn vẹn của mô hình Marketplace C2C, toàn bộ team bắt buộc tuân thủ các quy tắc sau. 
+**Định dạng phản hồi chung cho mọi API Backend:** `{ "success": boolean, "message": string, "data": any }`.
 
-A. Nhóm Backend (3 Thành viên)
-1. BE 1 (Core & Security): Xác thực & Định danh
+### A. Nhóm Backend (3 Thành viên)
 
-Nhiệm vụ: API Đăng ký, Đăng nhập, Quản lý Profile.
+**1. BE 1 (Core & Security): Xác thực & Định danh**
+* **Nhiệm vụ:** Xây dựng API Đăng ký, Đăng nhập, Quản lý Profile.
+* **Ràng buộc bảo mật:**
+    * Bắt buộc mã hóa password bằng thư viện `bcrypt` trước khi insert vào DB.
+    * Cấp phát Token qua `jsonwebtoken` (JWT). **Trọng tâm:** Bên trong Payload của Token bắt buộc phải chứa `user_id` để làm bằng chứng định danh cho mọi thao tác mua bán phía sau.
+    * Chống SQL Injection triệt để bằng cách sử dụng **Prepared Statements** (dùng dấu `?` trong các câu query).
 
-Ràng buộc:
+**2. BE 2 (Marketplace Catalog): Luồng Đăng Bán & Tìm Kiếm**
+* **Nhiệm vụ:** Viết API Đăng bán xe (Tạo tin), Hiển thị danh sách xe, Sửa/Xóa tin đăng.
+* **Ràng buộc (Bảo mật tuyệt đối):**
+    * Khi nhận Request tạo tin đăng (`POST /api/bikes`), **tuyệt đối KHÔNG lấy `seller_id` từ `req.body` do FE gửi lên**. Middleware phải tự động giải mã JWT Token, trích xuất `user_id` của phiên làm việc hiện tại và gán vào DB làm `seller_id`. (Ngăn chặn hacker thay đổi body để mạo danh người khác đăng bài).
+    * API `GET` danh sách xe bắt buộc phải có tính năng Phân trang (Pagination) thông qua `LIMIT` và `OFFSET`.
 
-Mã hóa password bằng bcrypt.
+**3. BE 3 (Business Logic): Luồng Mua Hàng & Thanh Toán**
+* **Nhiệm vụ:** Xử lý logic Tạo đơn hàng (`Orders`) và trừ số lượng trong kho (`Bikes`).
+* **Ràng buộc (Tử huyệt):**
+    * Tương tự BE2, phải lấy `buyer_id` tự động từ JWT Token.
+    * Thao tác thanh toán bắt buộc dùng **MySQL Transactions** (`BEGIN`, `COMMIT`, `ROLLBACK`). Việc ghi dữ liệu vào bảng Orders và Update bảng Bikes phải xảy ra trong cùng một phiên. Nếu 1 trong 2 quá trình sinh lỗi, phải Rollback toàn bộ để chặn đứng tình trạng "bán khống" hoặc mất mát dữ liệu.
 
-Cấp phát jsonwebtoken (JWT). Trọng tâm: Token phải chứa user_id bên trong payload để làm bằng chứng định danh cho các thao tác Mua/Bán phía sau.
+### B. Nhóm Frontend (2 Thành viên)
 
-Chống SQL Injection bằng Prepared Statements.
+**1. FE 1 (Base & User Entity): Kiến trúc nền & Tài khoản**
+* **Nhiệm vụ:** Thiết lập UI/UX nền tảng và Xử lý logic gọi API Auth.
+* **Ràng buộc:**
+    * Lưu trữ Token an toàn vào `localStorage` (hoặc `sessionStorage`).
+    * Tự động gắn header `Authorization: Bearer <token>` vào mọi request có yêu cầu bảo mật thông qua một hàm `fetch()` được cấu hình chung trong file `api.js`.
+    * **Bảo vệ Route:** Xây dựng cơ chế bắt luồng, tự động đá văng người dùng chưa đăng nhập ra khỏi các trang nhạy cảm như Form Đăng bán (`/sell.html`) hay Giỏ hàng (`/cart.html`).
 
-2. BE 2 (Marketplace Catalog): Luồng Đăng Bán & Tìm Kiếm
-
-Nhiệm vụ: API Đăng bán xe (Tạo tin), Hiển thị danh sách xe, Sửa/Xóa tin đăng.
-
-Ràng buộc (Bảo mật tuyệt đối):
-
-Khi nhận Request tạo tin đăng (POST /api/bikes), Tuyệt đối KHÔNG lấy seller_id từ body do FE gửi lên. Middleware phải tự động dịch JWT Token lấy user_id của người đang đăng nhập và gán vào DB làm seller_id. (Tránh lỗi mạo danh).
-
-API GET danh sách xe phải có tính năng Phân trang (Pagination).
-
-3. BE 3 (Business Logic): Luồng Mua Hàng & Thanh Toán
-
-Nhiệm vụ: Tạo đơn hàng (Orders), trừ số lượng kho.
-
-Ràng buộc (Tử huyệt):
-
-Ghi nhận buyer_id tự động từ JWT Token.
-
-Bắt buộc dùng MySQL Transactions (BEGIN, COMMIT, ROLLBACK) khi thao tác bảng Orders và Bikes cùng lúc để không xảy ra tình trạng "bán khống" hoặc mất dữ liệu giữa chừng.
-
-B. Nhóm Frontend (2 Thành viên)
-1. FE 1 (Base & User Entity): Kiến trúc nền & Tài khoản
-
-Nhiệm vụ: Thiết lập UI chung. Xử lý luồng Auth.
-
-Ràng buộc:
-
-Quản lý Token trong localStorage. Tự động gắn header Authorization: Bearer <token> vào mọi request qua file api.js.
-
-Bảo vệ Route: Xử lý đẩy người dùng chưa đăng nhập văng khỏi các trang yêu cầu quyền như Đăng bán (/sell.html) hay Giỏ hàng (/cart.html).
-
-2. FE 2 (C2C Flow): Trải nghiệm Mua & Bán
-
-Nhiệm vụ: Xây dựng luồng giao diện: Trang chủ (Mua) và Form đăng tin (Bán).
-
-Ràng buộc:
-
-UI phải tách bạch rõ ràng thông tin: "Xe này được bán bởi User A".
-
-API Tìm kiếm bắt buộc dùng kỹ thuật Debounce (chờ 300ms) chống spam server.
-
-Nút "Đăng bán" hoặc "Đặt mua" phải bị vô hiệu hóa (Disabled/Loading) trong quá trình chờ Server phản hồi để chặn lỗi double-click sinh ra dữ liệu rác.
+**2. FE 2 (C2C Flow): Trải nghiệm Mua & Bán**
+* **Nhiệm vụ:** Xây dựng UI/UX cho Trang chủ (Lưới xe đạp) và Form đăng tin.
+* **Ràng buộc:**
+    * UI phải hiển thị rạch ròi trạng thái sở hữu (Ví dụ: *"Xe này đang được bán bởi: [Tên User]"*).
+    * Thanh tìm kiếm bắt buộc gắn kỹ thuật **Debounce** (delay ~300ms) để chống spam API khi người dùng gõ liên tục.
+    * Khi bấm các nút gọi API quan trọng ("Đăng bán", "Đặt mua"), trạng thái nút phải lập tức chuyển sang Disabled hoặc Loading. Tuyệt đối chặn lỗi người dùng bấm đúp (double-click) sinh ra nhiều request rác trên Server.
