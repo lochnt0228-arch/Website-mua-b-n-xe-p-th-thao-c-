@@ -51,23 +51,34 @@ bike-marketplace/
 └── README.md                 # Tài liệu dự án
 
 ```
-## 🔄 3. Quy Trình Làm Việc Git (Bắt Buộc)
+## 🔄 3. Quy Trình Làm Việc Git (Cẩm nang nội bộ)
 
-Nhánh `main` là nhánh sản phẩm cuối cùng. **Tuyệt đối không một ai được quyền `push` trực tiếp lên nhánh `main`.**
+Để đảm bảo tiến độ, nhóm thống nhất sử dụng quy trình gộp code trực tiếp (Local Merge). Các thành viên thực hiện nghiêm ngặt theo vòng lặp 5 bước sau đây:
 
-* **1. Cập nhật:** Trước khi code, luôn đồng bộ hóa dự án.
-    * `git checkout main`
-    * `git pull origin main`
-* **2. Nhánh tính năng:** Mọi tính năng phải được phát triển trên nhánh riêng biệt.
-    * `git checkout -b feature/ten-chuc-nang` *(VD: `feature/api-tao-don-hang`)*
-* **3. Commit:** Lưu lịch sử với thông điệp rõ ràng, có tiền tố phân loại.
-    * `git add .`
-    * `git commit -m "feat: Nội dung công việc rõ ràng"`
-* **4. Push:** Đẩy nhánh cá nhân lên kho lưu trữ từ xa.
-    * `git push origin feature/ten-chuc-nang`
-* **5. Merge:** Truy cập Github để tạo **Pull Request (PR)**.
-    * *Quy tắc thép:* Chỉ Nhóm trưởng mới có quyền Review (đọc kiểm tra code) và bấm Merge. Nếu xảy ra conflict, người làm tính năng đó phải tự resolve dưới máy local trước khi PR được duyệt.
+* **Bước 1: Chuyển sang nhánh cá nhân**
+    Trước khi bắt đầu gõ code, hãy chắc chắn bạn đang ở nhánh của riêng mình.
+    * Lệnh: `git checkout ten-nhanh-cua-ban` *(Ví dụ: `git checkout TienLoc`)*
 
+* **Bước 2: Lưu lại công việc (Commit)**
+    Sau khi hoàn thành tính năng, tiến hành lưu lại code trên nhánh cá nhân.
+    * Lệnh 1: `git add .`
+    * Lệnh 2: `git commit -m "Nội dung công việc đã làm"`
+
+* **Bước 3: Gộp code vào nhánh chính (Merge)**
+    Hệ thống đã ghi nhận code trên nhánh cá nhân. Tiếp theo, chuyển về nhánh chính để gộp code.
+    * Lệnh 1: `git checkout main`
+    * Lệnh 2: `git merge ten-nhanh-cua-ban` *(Ví dụ: `git merge TienLoc`)*
+
+* **Bước 4: Đẩy code lên hệ thống (Push)**
+    Sau khi gộp thành công, đẩy toàn bộ code mới nhất từ máy bạn lên kho lưu trữ chung.
+    * Lệnh: `git push origin main`
+
+* **Bước 5: Lấy code mới nhất về (Pull)**
+    **Tuyệt đối ghi nhớ:** Lần làm việc tiếp theo, trước khi code bao giờ cũng phải lấy code mới nhất từ nhánh `main` về máy để tránh bị đè code của người khác.
+    * Lệnh 1: `git checkout main`
+    * Lệnh 2: `git pull origin main`
+
+*(Hoàn thành Bước 5, quay lại Bước 1 để làm tính năng mới).*
 ---
 
 ## 👥 4. Phân Công Nhiệm Vụ & Ràng Buộc (Contracts)
