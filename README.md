@@ -24,31 +24,32 @@ Dự án được thiết kế với kiến trúc Monorepo, đề cao tính toà
 
 ```text
 bike-marketplace/
-├── frontend/                 # Khu vực Client-side
-│   ├── assets/               # Hình ảnh, icon, font
-│   ├── css/                  # style.css chung
-│   ├── js/                   # Logic JS chia theo Domain
+├── static/                   # Khu vực Client-side (Tài nguyên tĩnh)
+│   ├── assets/               # CSS, JS, Images, Fonts gốc của Template ClassiGrids
+│   ├── css/                  # Chứa file style.css tùy chỉnh của nhóm
+│   ├── js/                   # Logic JS do nhóm tự viết
 │   │   ├── api.js            # [CỐT LÕI] Hàm fetch() trung tâm, tự động đính kèm JWT Token
-│   │   ├── auth.js           # Đăng nhập, Đăng ký, Quản lý phiên
-│   │   ├── marketplace.js    # Hiển thị lưới xe, Tìm kiếm, Lọc
-│   │   ├── seller.js         # Logic Đăng bán xe, Quản lý tin đăng
-│   │   └── buyer.js          # Giỏ hàng, Thanh toán, Lịch sử mua
-│   └── pages/                # index.html, login.html, sell-bike.html,...
+│   │   ├── auth.js           # Logic Đăng nhập, Đăng ký, Quản lý phiên
+│   │   └── ...               # Các file logic nghiệp vụ khác
+│   ├── lib/                  # [THÊM MỚI] Thư viện bên thứ ba (Third-party)
+│   │   ├── css/              # Chứa các file CSS của Bootstrap
+│   │   └── js/               # Chứa các file JS của Bootstrap
+│   ├── index.html            # Trang chủ (Template)
+│   ├── 404.html              # Trang lỗi (Template)
+│   └── ...                   # Các file HTML khác của template
 │
 ├── backend/                  # Khu vực Server-side
-│   ├── src/
-│   │   ├── config/           # Cấu hình MySQL (mysql2)
-│   │   ├── controllers/      # Xử lý Request/Response
-│   │   ├── middlewares/      # [CỐT LÕI] authMiddleware.js (Giải mã JWT, trích xuất user_id)
-│   │   ├── routes/           # Định tuyến (/api/v1/auth, /api/v1/bikes, /api/v1/orders)
-│   │   ├── utils/            # Hash password, format dữ liệu
-│   │   └── server.js         # Entry point
-│   ├── .env                  # [BẢO MẬT] Chứa DB_PASS, JWT_SECRET (KHÔNG PUSH LÊN GIT)
-│   └── package.json
+│   ├── database/             # Chứa file thiết kế CSDL
+│   │   └── init.sql          # File SQL chuẩn hóa mô hình C2C
+│   ├── src/                  # Mã nguồn xử lý logic của Server
+│   │   └── server.js         # Entry point (Cấu hình express.static phục vụ thư mục static)
+│   ├── .env                  # [BẢO MẬT] Chứa các biến môi trường nhạy cảm
+│   ├── package.json          # Quản lý thư viện (Express, MySQL2, Bcrypt, JWT,...)
+│   └── node_modules/         # Thư viện cài đặt (Đã được chặn bởi .gitignore)
 │
-├── .gitignore                # Chặn node_modules và .env
+├── .gitignore                # Chặn các file rác và file nhạy cảm lên GitHub
 ├── LICENSE                   # Giấy phép MIT
-└── README.md                 # Tài liệu dự án
+└── README.md                 # Tài liệu hướng dẫn dự án
 
 ```
 ## 🔄 3. Quy Trình Làm Việc Git (Cẩm nang nội bộ)
