@@ -141,3 +141,5 @@ vite.config.ts.timestamp-*
 # Bỏ qua file môi trường của backend
 backend/.env
 **/.env
+node_modules/
+**/node_modules/
