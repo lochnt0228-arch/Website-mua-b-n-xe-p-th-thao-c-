@@ -123,3 +123,8 @@ bike-marketplace/
     * UI phải hiển thị rạch ròi trạng thái sở hữu (Ví dụ: *"Xe này đang được bán bởi: [Tên User]"*).
     * Thanh tìm kiếm bắt buộc gắn kỹ thuật **Debounce** (delay ~300ms) để chống spam API khi người dùng gõ liên tục.
     * Khi bấm các nút gọi API quan trọng ("Đăng bán", "Đặt mua"), trạng thái nút phải lập tức chuyển sang Disabled hoặc Loading. Tuyệt đối chặn lỗi người dùng bấm đúp (double-click) sinh ra nhiều request rác trên Server.
+    
+ ### 📑 Quy chuẩn API (Bắt buộc)
+Mọi phản hồi từ Backend phải đúng định dạng JSON:
+- Thành công: { "success": true, "message": "Thông báo", "data": { dữ liệu } }
+- Thất bại: { "success": false, "message": "Lý do lỗi", "data": null }
