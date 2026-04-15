@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Đăng Nhập - ClassiGrids</title>
+    <meta name="description" content="Đăng nhập vào tài khoản của bạn" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
+
+    <!-- Web Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="assets/css/animate.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Header Area -->
+    <header class="header navbar-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="nav-inner">
+                        <nav class="navbar navbar-expand-lg">
+                            <a class="navbar-brand" href="index.html">
+                                <img src="assets/images/logo/logo.svg" alt="Logo">
+                            </a>
+                            <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                                <ul id="nav" class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                        <a href="index.html">Trang Chủ</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="register.html">Đăng Ký</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Start Main Content -->
+    <main>
+        <!-- Start Login Section -->
+        <section class="py-5 my-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5 col-md-7">
+                        <div class="card shadow-lg">
+                            <div class="card-body p-5">
+                                <h2 class="card-title text-center mb-4">Đăng Nhập</h2>
+
+                                <!-- Alert Messages -->
+                                <div id="alert-container"></div>
+
+                                <!-- Login Form -->
+                                <form id="login-form">
+                                    <!-- Email -->
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" id="email" name="email" required 
+                                            placeholder="Nhập email của bạn">
+                                        <small class="text-danger" id="email-error"></small>
+                                    </div>
+
+                                    <!-- Password -->
+                                    <div class="mb-4">
+                                        <label for="password" class="form-label">Mật Khẩu <span class="text-danger">*</span></label>
+                                        <input type="password" class="form-control" id="password" name="password" required 
+                                            placeholder="Nhập mật khẩu">
+                                        <small class="text-danger" id="password-error"></small>
+                                    </div>
+
+                                    <!-- Remember Me -->
+                                    <div class="mb-4 form-check">
+                                        <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                        <label class="form-check-label" for="remember">Nhớ tôi</label>
+                                    </div>
+
+                                    <!-- Submit Button -->
+                                    <button type="submit" class="btn btn-primary w-100 mb-3" id="login-btn">
+                                        <span class="button-text">Đăng Nhập</span>
+                                        <span class="spinner-border spinner-border-sm ms-2 d-none" id="loading-spinner"></span>
+                                    </button>
+                                </form>
+
+                                <!-- Register Link -->
+                                <div class="text-center">
+                                    <p>Chưa có tài khoản? <a href="register.html" class="text-primary">Đăng ký ngay</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Start Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer-content">
+                        <p>&copy; 2024 ClassiGrids. Bảo lưu mọi quyền.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================= Scripts ========================= -->
+    <script src="lib/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/route-guard.js"></script>
+    <script src="js/login.js"></script>
+</body>
+
+</html>
