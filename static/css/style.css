@@ -1,0 +1,468 @@
+/**
+ * ========================================
+ * STYLE.CSS - Custom FE1 Styling
+ * ========================================
+ * 
+ * Phần mở rộng CSS cho:
+ * 1. Auth forms (login, register)
+ * 2. Navbar modifications
+ * 3. Profile page styling
+ * 4. Form validation
+ */
+
+/* ========== Root Variables ========== */
+:root {
+  --primary-color: #3c2f7e;
+  --success-color: #06a77d;
+  --danger-color: #d63031;
+  --warning-color: #f39c12;
+  --light-gray: #f5f6fa;
+  --border-radius: 8px;
+  --box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ========== Auth Forms ========== */
+
+.card {
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-body {
+  padding: 2.5rem;
+}
+
+.card-title {
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 1.75rem;
+}
+
+/* ========== Form Labels & Inputs ========== */
+
+.form-label {
+  font-weight: 600;
+  color: #2c2c2c;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.form-control {
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(60, 47, 126, 0.15);
+}
+
+.form-control::placeholder {
+  color: #a0a0a0;
+}
+
+.form-check-input {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.form-check-input:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.form-check-label {
+  cursor: pointer;
+  color: #2c2c2c;
+}
+
+/* ========== Buttons ========== */
+
+.btn {
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: #2a1f5e;
+  border-color: #2a1f5e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(60, 47, 126, 0.3);
+}
+
+.btn-primary:disabled {
+  background-color: #c0c0c0;
+  border-color: #c0c0c0;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-outline-primary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #5a6268;
+}
+
+/* ========== Loading Spinner ========== */
+
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.2em;
+}
+
+.d-none {
+  display: none !important;
+}
+
+/* ========== Alerts ========== */
+
+.alert {
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-danger {
+  background-color: #ffe5e5;
+  color: #d63031;
+}
+
+.alert-success {
+  background-color: #e5f9f5;
+  color: #06a77d;
+}
+
+.alert-warning {
+  background-color: #fffbe5;
+  color: #f39c12;
+}
+
+.alert-info {
+  background-color: #e5f4ff;
+  color: #0066cc;
+}
+
+.btn-close {
+  color: currentColor;
+}
+
+/* ========== Navbar Auth Modifications ========== */
+
+.navbar.authenticated {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.nav-link {
+  color: #2c2c2c !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-color) !important;
+}
+
+.nav-link.dropdown-toggle::after {
+  margin-left: 0.5rem;
+}
+
+.dropdown-menu {
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item {
+  color: #2c2c2c;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: var(--light-gray);
+  color: var(--primary-color);
+}
+
+.dropdown-item.text-danger:hover {
+  background-color: #ffe5e5;
+  color: #d63031 !important;
+}
+
+.dropdown-divider {
+  margin: 0.5rem 0;
+  border-color: #e0e0e0;
+}
+
+/* ========== Auth Buttons in Navbar ========== */
+
+#auth-buttons-container {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-left: 1.5rem;
+}
+
+#auth-buttons-container .btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+#auth-buttons-container .btn-outline-primary {
+  border: 1.5px solid var(--primary-color);
+  color: var(--primary-color);
+  background-color: transparent;
+}
+
+#auth-buttons-container .btn-outline-primary:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(60, 47, 126, 0.3);
+}
+
+#auth-buttons-container .btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+#auth-buttons-container .btn-primary:hover {
+  background-color: #2a1f5e;
+  border-color: #2a1f5e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(60, 47, 126, 0.3);
+}
+
+#auth-buttons-container .dropdown-toggle {
+  color: var(--primary-color) !important;
+  border-color: var(--primary-color);
+}
+
+#auth-buttons-container .dropdown-toggle:hover {
+  background-color: var(--primary-color);
+  color: white !important;
+}
+
+#auth-buttons-container i {
+  margin-right: 0.4rem;
+}
+
+/* ========== Profile Page ========== */
+
+.placeholder-glow .placeholder {
+  background-color: #e9ecef;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ========== Error Messages ========== */
+
+.text-danger {
+  color: #d63031 !important;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* ========== Responsive Styles ========== */
+
+@media (max-width: 768px) {
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+  }
+
+  .form-control {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .navbar-brand {
+    margin-right: 1rem;
+  }
+
+  [data-auth-buttons] {
+    margin-top: 0.5rem;
+  }
+
+  [data-auth-buttons] .d-flex {
+    flex-direction: column;
+  }
+
+  [data-auth-buttons] .btn {
+    width: 100%;
+  }
+}
+
+/* ========== Accessibility ========== */
+
+.form-control:invalid {
+  border-color: #d63031;
+}
+
+.form-control:valid {
+  border-color: #06a77d;
+}
+
+a:focus,
+button:focus,
+.btn:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* ========== Text Utilities ========== */
+
+.text-muted {
+  color: #808080 !important;
+}
+
+.fw-bold {
+  font-weight: 700 !important;
+}
+
+.fs-5 {
+  font-size: 1.1rem !important;
+}
+
+.fs-3 {
+  font-size: 2rem !important;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.ms-auto {
+  margin-left: auto;
+}
+
+.ms-2 {
+  margin-left: 0.5rem;
+}
+
+/* ========== Utility Classes ========== */
+
+.my-5 {
+  margin-top: 3rem !important;
+  margin-bottom: 3rem !important;
+}
+
+.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+
+.p-5 {
+  padding: 3rem !important;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+
+.shadow-lg {
+  box-shadow: var(--box-shadow);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.text-success {
+  color: var(--success-color) !important;
+}
