@@ -126,18 +126,3 @@ CREATE TABLE reviews (
     FOREIGN KEY (reviewer_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (reviewed_user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
-USE bike_marketplace;
-
--- Thêm dữ liệu mẫu cho bảng categories (Danh mục)
-INSERT INTO categories (name) VALUES 
-('Xe đạp leo núi (MTB)'), 
-('Xe đạp đua (Road)'), 
-('Xe đạp đường phố (City)'),
-('Xe đạp trẻ em');
-
--- Thêm dữ liệu mẫu cho bảng brands (Thương hiệu)
-INSERT INTO brands (name) VALUES 
-('Giant'), 
-('Trek'), 
-('Asama'),
-('Trinx');
