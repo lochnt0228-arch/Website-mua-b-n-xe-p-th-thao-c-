@@ -58,4 +58,7 @@ app.post('/api/auth/register', (req, res) => {
     });
 });
 
+// Mock API: Profile
+
+
 app.listen(5000, () => console.log('Server chạy tại http://localhost:5000'));
