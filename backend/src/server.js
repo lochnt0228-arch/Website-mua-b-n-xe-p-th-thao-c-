@@ -18,6 +18,13 @@ const userRoutes = require('./routes/userRoutes');
 app.use('/api/auth',          authRoutes); // /api/auth/register, /api/auth/login
 app.use('/api/users/profile', userRoutes); // /api/users/profile (GET, PUT)
 
+// ── Routes BE2 ──
+const bikeRoutes    = require('./routes/bikeRoutes');
+const catalogRoutes = require('./routes/catalogRoutes');
+
+app.use('/api/bikes', bikeRoutes);    // /api/bikes (GET, POST, PUT, DELETE)
+app.use('/api',       catalogRoutes); // /api/categories, /api/brands
+
 app.listen(process.env.PORT || 5000, () =>
   console.log(`Server chạy tại http://localhost:${process.env.PORT || 5000}`)
 );
