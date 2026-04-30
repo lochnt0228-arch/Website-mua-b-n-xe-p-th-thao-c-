@@ -70,7 +70,7 @@ async function register(name, email, password, passwordConfirm) {
 function logout() {
   api.clearToken();
   api.clearUser();
-  window.location.href = '/index.html';
+  window.location.href = '/index.php';
 }
 
 /**

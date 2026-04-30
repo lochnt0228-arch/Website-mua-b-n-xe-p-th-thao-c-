@@ -93,7 +93,7 @@ async function request(method, endpoint, body = null) {
       clearToken();
       clearUser();
       // Redirect tới login (nếu không phải trang login)
-      if (!window.location.pathname.includes('/login.html')) {
+      if (!window.location.pathname.includes('/login.php')) {
         window.location.href = '/login.html?expired=true';
       }
       return {

@@ -1,164 +1,5 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zxx">
+<?php include 'includes/header.php'; ?>
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>ClassiGrids - Classified Ads and Listing Website Template.</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
-    <!-- Place favicon.ico in the root directory -->
-
-    <!-- Web Font -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-
-    <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="assets/css/animate.css" />
-    <link rel="stylesheet" href="assets/css/tiny-slider.css" />
-    <link rel="stylesheet" href="assets/css/glightbox.min.css" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="css/style.css" />
-
-</head>
-
-<body>
-    <!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
-
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="preloader-inner">
-            <div class="preloader-icon">
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </div>
-    <!-- /End Preloader -->
-
-    <!-- Start Header Area -->
-    <header class="header navbar-area">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-12">
-                    <div class="nav-inner">
-                        <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand" href="index.html">
-                                <img src="assets/images/logo/logo.svg" alt="Logo">
-                            </a>
-                            <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="toggler-icon"></span>
-                                <span class="toggler-icon"></span>
-                                <span class="toggler-icon"></span>
-                            </button>
-                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                                <ul id="nav" class="navbar-nav ms-auto">
-                                    <li class="nav-item">
-                                        <a class=" active dd-menu collapsed" href="javascript:void(0)"
-                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-1"
-                                            aria-controls="navbarSupportedContent" aria-expanded="false"
-                                            aria-label="Toggle navigation">Trang Chủ</a>
-                                        <ul class="sub-menu collapse" id="submenu-1-1">
-                                            <li class="nav-item active"><a href="index.html">Trang Chủ Mặc Định</a></li>
-                                            <li class="nav-item"><a href="javascript:void(0)">Trang Chủ Mẫu 2</a></li>
-                                            <li class="nav-item"><a href="javascript:void(0)">Trang Chủ Mẫu 3</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="javascript:void(0)" aria-label="Toggle navigation">Danh Mục</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class=" dd-menu collapsed" href="javascript:void(0)"
-                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-3"
-                                            aria-controls="navbarSupportedContent" aria-expanded="false"
-                                            aria-label="Toggle navigation">Tin Đăng</a>
-                                        <ul class="sub-menu collapse" id="submenu-1-3">
-                                            <li class="nav-item"><a href="javascript:void(0)">Lưới Tin Đăng</a></li>
-                                            <li class="nav-item"><a href="javascript:void(0)">Danh Sách Tin Đăng</a></li>
-                                            <li class="nav-item"><a href="javascript:void(0)">Chi Tiết Tin Đăng</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class=" dd-menu collapsed" href="javascript:void(0)"
-                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-4"
-                                            aria-controls="navbarSupportedContent" aria-expanded="false"
-                                            aria-label="Toggle navigation">Trang</a>
-                                        <ul class="sub-menu mega-menu collapse" id="submenu-1-4">
-                                            <li class="single-block">
-                                                <ul>
-                                                    <li class="mega-menu-title">Trang Cơ Bản</li>
-                                                    <li class="nav-item"><a href="about-us.html">Giới Thiệu</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Chi Tiết Tin</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Đăng Tin</a></li>
-                                                    <li class="nav-item"><a href="pricing.html">Bảng Giá</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Đăng Ký</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Đăng Nhập</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Liên Hệ</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">FAQ</a></li>
-                                                    <li class="nav-item"><a href="404.html">Trang Lỗi 404</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Email Thành Công</a>
-                                                    </li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Sắp Ra Mắt</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="single-block">
-                                                <ul>
-                                                    <li class="mega-menu-title">Bảng Điều Khiển</li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Tổng Quan</a>
-                                                    </li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Hồ Sơ</a>
-                                                    </li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Tin Của Tôi</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Tin Yêu Thích</a>
-                                                    </li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Đăng Tin Mới</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Tin Đã Lưu</a>
-                                                    </li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Tin Nhắn</a></li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Đóng Tài Khoản</a>
-                                                    </li>
-                                                    <li class="nav-item"><a href="javascript:void(0)">Hóa Đơn</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class=" dd-menu collapsed" href="javascript:void(0)"
-                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-5"
-                                            aria-controls="navbarSupportedContent" aria-expanded="false"
-                                            aria-label="Toggle navigation">Tin Tức</a>
-                                        <ul class="sub-menu collapse" id="submenu-1-5">
-                                            <li class="nav-item"><a href="javascript:void(0)">Lưới Có Thanh Bên</a>
-                                            </li>
-                                            <li class="nav-item"><a href="javascript:void(0)">Chi Tiết Tin Tức</a></li>
-                                            <li class="nav-item"><a href="javascript:void(0)">Chi Tiết Có Thanh Bên</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div> <!-- navbar collapse -->
-                            <div id="auth-buttons-container" class="ms-3 d-flex gap-2 align-items-center">
-                                <!-- Auth buttons will be injected here by auth-navbar.js -->
-                            </div>
-                        </nav> <!-- navbar -->
-                    </div>
-                </div>
-            </div> <!-- row -->
-        </div> <!-- container -->
-    </header>
     <!-- End Header Area -->
 
     <!-- Start Hero Area -->
@@ -235,7 +76,7 @@
                     <div class="col-12 p-0">
                         <div class="category-slider">
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/car.svg" alt="#">
                                 </div>
@@ -244,7 +85,7 @@
                             </a>
                             <!-- End Single Category -->
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/laptop.svg" alt="#">
                                 </div>
@@ -253,7 +94,7 @@
                             </a>
                             <!-- End Single Category -->
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/matrimony.svg" alt="#">
                                 </div>
@@ -262,7 +103,7 @@
                             </a>
                             <!-- End Single Category -->
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/furniture.svg" alt="#">
                                 </div>
@@ -271,7 +112,7 @@
                             </a>
                             <!-- End Single Category -->
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/jobs.svg" alt="#">
                                 </div>
@@ -280,7 +121,7 @@
                             </a>
                             <!-- End Single Category -->
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/real-estate.svg" alt="#">
                                 </div>
@@ -289,7 +130,7 @@
                             </a>
                             <!-- End Single Category -->
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/laptop.svg" alt="#">
                                 </div>
@@ -298,7 +139,7 @@
                             </a>
                             <!-- End Single Category -->
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/hospital.svg" alt="#">
                                 </div>
@@ -307,7 +148,7 @@
                             </a>
                             <!-- End Single Category -->
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/tshirt.svg" alt="#">
                                 </div>
@@ -316,7 +157,7 @@
                             </a>
                             <!-- End Single Category -->
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/education.svg" alt="#">
                                 </div>
@@ -325,7 +166,7 @@
                             </a>
                             <!-- End Single Category -->
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/controller.svg" alt="#">
                                 </div>
@@ -334,7 +175,7 @@
                             </a>
                             <!-- End Single Category -->
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/travel.svg" alt="#">
                                 </div>
@@ -343,7 +184,7 @@
                             </a>
                             <!-- End Single Category -->
                             <!-- Start Single Category -->
-                            <a href="category.html" class="single-cat">
+                            <a href="category.php" class="single-cat">
                                 <div class="icon">
                                     <img src="assets/images/categories/watch.svg" alt="#">
                                 </div>
@@ -376,7 +217,7 @@
                         <!-- Start Single Grid -->
                         <div class="single-grid wow fadeInUp" data-wow-delay=".2s">
                             <div class="image">
-                                <a href="item-details.html" class="thumbnail"><img src="assets/images/items-grid/img1.jpg" alt="#"></a>
+                                <a href="item-details.php" class="thumbnail"><img src="assets/images/items-grid/img1.jpg" alt="#"></a>
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)"><img src="assets/images/items-grid/author-1.jpg" alt="#">
@@ -389,7 +230,7 @@
                                 <div class="top-content">
                                     <a href="javascript:void(0)" class="tag">Xe Đạp Địa Hình</a>
                                     <h3 class="title">
-                                        <a href="item-details.html">Xe Đạp Giant XTC Pro</a>
+                                        <a href="item-details.php">Xe Đạp Giant XTC Pro</a>
                                     </h3>
                                     <p class="update-time">Cập nhật: 1 giờ trước</p>
                                     <ul class="rating">
@@ -417,7 +258,7 @@
                         <!-- Start Single Grid -->
                         <div class="single-grid wow fadeInUp" data-wow-delay=".4s">
                             <div class="image">
-                                <a href="item-details.html" class="thumbnail"><img src="assets/images/items-grid/img2.jpg" alt="#"></a>
+                                <a href="item-details.php" class="thumbnail"><img src="assets/images/items-grid/img2.jpg" alt="#"></a>
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)"><img src="assets/images/items-grid/author-2.jpg" alt="#">
@@ -430,7 +271,7 @@
                                 <div class="top-content">
                                     <a href="javascript:void(0)" class="tag">Xe Đạp Đua</a>
                                     <h3 class="title">
-                                        <a href="item-details.html">Xe Đạp Đua Trek Emonda</a>
+                                        <a href="item-details.php">Xe Đạp Đua Trek Emonda</a>
                                     </h3>
                                     <p class="update-time">Cập nhật: 2 giờ trước</p>
                                     <ul class="rating">
@@ -458,7 +299,7 @@
                         <!-- Start Single Grid -->
                         <div class="single-grid wow fadeInUp" data-wow-delay=".6s">
                             <div class="image">
-                                <a href="item-details.html" class="thumbnail"><img src="assets/images/items-grid/img3.jpg" alt="#"></a>
+                                <a href="item-details.php" class="thumbnail"><img src="assets/images/items-grid/img3.jpg" alt="#"></a>
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)"><img src="assets/images/items-grid/author-3.jpg" alt="#">
@@ -472,7 +313,7 @@
                                 <div class="top-content">
                                     <a href="javascript:void(0)" class="tag">Phụ Kiện</a>
                                     <h3 class="title">
-                                        <a href="item-details.html">Mũ Bảo Hiểm Giro</a>
+                                        <a href="item-details.php">Mũ Bảo Hiểm Giro</a>
                                     </h3>
                                     <p class="update-time">Cập nhật: 3 giờ trước</p>
                                     <ul class="rating">
@@ -500,7 +341,7 @@
                         <!-- Start Single Grid -->
                         <div class="single-grid wow fadeInUp" data-wow-delay=".2s">
                             <div class="image">
-                                <a href="item-details.html" class="thumbnail"><img src="assets/images/items-grid/img4.jpg" alt="#"></a>
+                                <a href="item-details.php" class="thumbnail"><img src="assets/images/items-grid/img4.jpg" alt="#"></a>
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)"><img src="assets/images/items-grid/author-4.jpg" alt="#">
@@ -513,7 +354,7 @@
                                 <div class="top-content">
                                     <a href="javascript:void(0)" class="tag">Xe Đạp Touring</a>
                                     <h3 class="title">
-                                        <a href="item-details.html">Xe Đạp Touring Surly</a>
+                                        <a href="item-details.php">Xe Đạp Touring Surly</a>
                                     </h3>
                                     <p class="update-time">Cập nhật: 4 giờ trước</p>
                                     <ul class="rating">
@@ -541,7 +382,7 @@
                         <!-- Start Single Grid -->
                         <div class="single-grid wow fadeInUp" data-wow-delay=".4s">
                             <div class="image">
-                                <a href="item-details.html" class="thumbnail"><img src="assets/images/items-grid/img5.jpg" alt="#"></a>
+                                <a href="item-details.php" class="thumbnail"><img src="assets/images/items-grid/img5.jpg" alt="#"></a>
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)"><img src="assets/images/items-grid/author-5.jpg" alt="#">
@@ -555,7 +396,7 @@
                                 <div class="top-content">
                                     <a href="javascript:void(0)" class="tag">Đồng Hồ Thể Thao</a>
                                     <h3 class="title">
-                                        <a href="item-details.html">Garmin Forerunner 255</a>
+                                        <a href="item-details.php">Garmin Forerunner 255</a>
                                     </h3>
                                     <p class="update-time">Cập nhật: 5 giờ trước</p>
                                     <ul class="rating">
@@ -583,7 +424,7 @@
                         <!-- Start Single Grid -->
                         <div class="single-grid wow fadeInUp" data-wow-delay=".6s">
                             <div class="image">
-                                <a href="item-details.html" class="thumbnail"><img src="assets/images/items-grid/img6.jpg" alt="#"></a>
+                                <a href="item-details.php" class="thumbnail"><img src="assets/images/items-grid/img6.jpg" alt="#"></a>
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)"><img src="assets/images/items-grid/author-6.jpg" alt="#">
@@ -596,7 +437,7 @@
                                 <div class="top-content">
                                     <a href="javascript:void(0)" class="tag">Dịch Vụ Sửa Chữa</a>
                                     <h3 class="title">
-                                        <a href="item-details.html">Bảo Dưỡng Toàn Bộ Xe</a>
+                                        <a href="item-details.php">Bảo Dưỡng Toàn Bộ Xe</a>
                                     </h3>
                                     <p class="update-time">Cập nhật: 7 giờ trước</p>
                                     <ul class="rating">

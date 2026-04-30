@@ -149,7 +149,7 @@ registerForm.addEventListener('submit', async (e) => {
         if (auth.isAuthenticated()) {
           routeGuard.redirectAfterLogin();
         } else {
-          window.location.href = '/login.html';
+          window.location.href = '/login.php';
         }
       }, 1500);
     } else {

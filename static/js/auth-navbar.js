@@ -28,10 +28,10 @@ function buildAuthenticatedNavbar() {
 
   // Thêm "Đăng Bán" link
   const nav = document.querySelector('ul#nav');
-  if (nav && !nav.querySelector('li:has(a[href*="sell.html"])')) {
+  if (nav && !nav.querySelector('li:has(a[href*="sell.php"])')) {
     const sellItem = document.createElement('li');
     sellItem.className = 'nav-item';
-    sellItem.innerHTML = '<a href="sell.html" class="nav-link fw-bold text-primary">Đăng Bán</a>';
+    sellItem.innerHTML = '<a href="sell.php" class="nav-link fw-bold text-primary">Đăng Bán</a>';
     nav.appendChild(sellItem);
   }
 
@@ -42,10 +42,10 @@ function buildAuthenticatedNavbar() {
         <i class="lni lni-user"></i> ${userName}
       </button>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-        <li><a class="dropdown-item" href="profile.html"><i class="lni lni-user"></i> Hồ Sơ Cá Nhân</a></li>
-        <li><a class="dropdown-item" href="my-ads.html"><i class="lni lni-package"></i> Tin Đăng Của Tôi</a></li>
-        <li><a class="dropdown-item" href="cart.html"><i class="lni lni-cart"></i> Giỏ Hàng</a></li>
-        <li><a class="dropdown-item" href="my-orders.html"><i class="lni lni-files"></i> Đơn Mua</a></li>
+        <li><a class="dropdown-item" href="profile.php"><i class="lni lni-user"></i> Hồ Sơ Cá Nhân</a></li>
+        <li><a class="dropdown-item" href="my-ads.php"><i class="lni lni-package"></i> Tin Đăng Của Tôi</a></li>
+        <li><a class="dropdown-item" href="cart.php"><i class="lni lni-cart"></i> Giỏ Hàng</a></li>
+        <li><a class="dropdown-item" href="my-orders.php"><i class="lni lni-files"></i> Đơn Mua</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item text-danger" href="#" id="auth-logout-btn"><i class="lni lni-exit"></i> Đăng Xuất</a></li>
       </ul>
@@ -79,10 +79,10 @@ function buildUnauthenticatedNavbar() {
 
   // Thêm login/register buttons
   container.innerHTML = `
-    <a href="login.html" class="btn btn-outline-primary btn-sm">
+    <a href="login.php" class="btn btn-outline-primary btn-sm">
       <i class="lni lni-enter"></i> Đăng Nhập
     </a>
-    <a href="register.html" class="btn btn-primary btn-sm">
+    <a href="register.php" class="btn btn-primary btn-sm">
       <i class="lni lni-user"></i> Đăng Ký
     </a>
   `;

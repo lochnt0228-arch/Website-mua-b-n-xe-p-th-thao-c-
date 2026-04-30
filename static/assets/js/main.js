@@ -49,7 +49,8 @@ Author: GrayGrids
 	});
     
     // WOW active
-    new WOW().init();
-    
+    if (typeof WOW !== 'undefined') {
+        new WOW().init();
+    }
 })();
 

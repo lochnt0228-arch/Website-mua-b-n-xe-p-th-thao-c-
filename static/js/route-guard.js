@@ -17,20 +17,20 @@
  * Danh sách các route yêu cầu authentication
  */
 const PROTECTED_ROUTES = [
-  '/sell.html',
-  '/cart.html',
-  '/profile.html',
-  '/my-orders.html',
-  '/my-ads.html',
-  '/messages.html'
+  '/sell.php',
+  '/cart.php',
+  '/profile.php',
+  '/my-orders.php',
+  '/my-ads.php',
+  '/messages.php'
 ];
 
 /**
  * Danh sách các route chỉ accessible khi CHƯA login
  */
 const AUTH_ONLY_ROUTES = [
-  '/login.html',
-  '/register.html'
+  '/login.php',
+  '/register.php'
 ];
 
 /**
@@ -71,7 +71,7 @@ function checkAuth() {
 
   // Nếu trang chỉ cho chưa login (login, register) nhưng user đã login
   if (isAuthOnly && isAuthenticated) {
-    window.location.href = '/index.html';
+    window.location.href = '/index.php';
     return false;
   }
 
@@ -108,7 +108,7 @@ function redirectAfterLogin() {
     sessionStorage.removeItem('redirectAfterLogin');
     window.location.href = redirectUrl;
   } else {
-    window.location.href = '/index.html';
+    window.location.href = '/index.php';
   }
 }
 

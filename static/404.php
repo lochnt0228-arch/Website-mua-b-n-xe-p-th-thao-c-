@@ -56,7 +56,7 @@
             <h2>Here Is Some Problem</h2>
             <p>The page you are looking for it maybe deleted</p>
             <div class="button">
-              <a href="index.html" class="btn">Go To Home</a>
+              <a href="index.php" class="btn">Go To Home</a>
             </div>
           </div>
         </div>

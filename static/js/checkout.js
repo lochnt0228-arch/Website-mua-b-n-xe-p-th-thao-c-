@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Hiển thị thông báo thành công và chuyển hướng
                 alert("Đặt hàng thành công! Cảm ơn bạn đã mua sắm tại Chợ Xe Đạp Cũ.");
-                window.location.href = "index.html"; // Trở về trang chủ sau khi mua
+                window.location.href = "index.php"; // Trở về trang chủ sau khi mua
 
             }, 2000);
         });
