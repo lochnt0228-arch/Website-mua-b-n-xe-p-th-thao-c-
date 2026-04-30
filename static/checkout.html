@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Thanh Toán - ClassiGrids</title>
+    <meta name="description" content="Thanh toán đơn hàng" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
+
+    <!-- Web Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="assets/css/animate.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Header Area -->
+    <header class="header navbar-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="nav-inner">
+                        <nav class="navbar navbar-expand-lg">
+                            <a class="navbar-brand" href="index.html">
+                                <img src="assets/images/logo/logo.svg" alt="Logo">
+                            </a>
+                            <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                                <ul id="nav" class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                        <a class=" active dd-menu collapsed" href="javascript:void(0)"
+                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-1"
+                                            aria-controls="navbarSupportedContent" aria-expanded="false"
+                                            aria-label="Toggle navigation">Trang Chủ</a>
+                                        <ul class="sub-menu collapse" id="submenu-1-1">
+                                            <li class="nav-item active"><a href="index.html">Trang Chủ Mặc Định</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="javascript:void(0)" aria-label="Toggle navigation">Danh Mục</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class=" dd-menu collapsed" href="javascript:void(0)"
+                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-3"
+                                            aria-controls="navbarSupportedContent" aria-expanded="false"
+                                            aria-label="Toggle navigation">Tin Đăng</a>
+                                        <ul class="sub-menu collapse" id="submenu-1-3">
+                                            <li class="nav-item"><a href="javascript:void(0)">Lưới Tin Đăng</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div> <!-- navbar collapse -->
+                            <div id="auth-buttons-container" class="ms-3 d-flex gap-2 align-items-center">
+                                <!-- Auth buttons will be injected here by auth-navbar.js -->
+                            </div>
+                        </nav> <!-- navbar -->
+                    </div>
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </header>
+
+    <!-- Start Main Content -->
+    <main>
+        <section class="py-5 my-5">
+            <div class="container">
+                <h2 class="mb-4">Thanh Toán</h2>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <!-- Alert -->
+                        <div class="alert alert-info">
+                            ✅ <strong>Trang này đã được bảo vệ bởi Route Guard!</strong> Chỉ người dùng đã đăng nhập mới có thể thao tác.
+                        </div>
+
+                        <!-- Checkout Form -->
+                        <div class="card shadow-lg mb-4">
+                            <div class="card-body p-4 p-md-5">
+                                <h4 class="card-title mb-4">Thông Tin Giao Hàng</h4>
+                                <form id="checkoutForm">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="fullName" class="form-label">Họ và Tên</label>
+                                            <input type="text" class="form-control" id="fullName" placeholder="Nguyễn Văn A" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="phone" class="form-label">Số Điện Thoại</label>
+                                            <input type="tel" class="form-control" id="phone" placeholder="0912345678" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Địa Chỉ Nhận Hàng</label>
+                                        <input type="text" class="form-control" id="address" placeholder="Số nhà, Tên đường, Phường/Xã, Quận/Huyện, Tỉnh/TP" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="notes" class="form-label">Ghi Chú Đơn Hàng (Tùy chọn)</label>
+                                        <textarea class="form-control" id="notes" rows="3" placeholder="Ví dụ: Giao hàng giờ hành chính..."></textarea>
+                                    </div>
+                                    
+                                    <hr class="my-4">
+                                    
+                                    <h4 class="card-title mb-3">Phương Thức Thanh Toán</h4>
+                                    <div class="form-check mb-2 custom-radio p-3 border rounded">
+                                        <input class="form-check-input ms-1" type="radio" name="paymentMethod" id="cod" value="cod" checked>
+                                        <label class="form-check-label fw-bold ms-2" for="cod">
+                                            Thanh toán khi nhận hàng (COD)
+                                        </label>
+                                        <small class="d-block text-muted ms-4 ps-1 mt-1">Thanh toán bằng tiền mặt khi đơn hàng được giao tới.</small>
+                                    </div>
+                                    <div class="form-check mb-4 custom-radio p-3 border rounded">
+                                        <input class="form-check-input ms-1" type="radio" name="paymentMethod" id="transfer" value="transfer">
+                                        <label class="form-check-label fw-bold ms-2" for="transfer">
+                                            Chuyển khoản qua Ngân hàng
+                                        </label>
+                                        <small class="d-block text-muted ms-4 ps-1 mt-1">Thông tin chuyển khoản sẽ được hiển thị sau khi hoàn tất đặt hàng.</small>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary w-100 fs-5 py-3" id="btnSubmitOrder">Xác Nhận Đặt Hàng</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="card shadow-lg sticky-top" style="top: 100px;">
+                            <div class="card-body p-4">
+                                <h4 class="card-title mb-4">Tóm Tắt Đơn Hàng</h4>
+                                
+                                <!-- Mock Product -->
+                                <div class="d-flex align-items-center border-bottom pb-3 mb-3">
+                                    <img src="assets/images/items-grid/img1.jpg" alt="Product" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;">
+                                    <div class="ms-3 flex-grow-1">
+                                        <h6 class="mb-1">Xe Đạp Giant XTC Pro</h6>
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">Số lượng: 1</small>
+                                            <small class="fw-bold text-dark">5.000.000 ₫</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted">Tạm tính:</span>
+                                    <span class="fw-bold">5.000.000 ₫</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
+                                    <span class="text-muted">Phí vận chuyển:</span>
+                                    <span class="text-success fw-bold">Miễn phí</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center fw-bold text-primary">
+                                    <span class="fs-5">Tổng cộng:</span>
+                                    <span class="fs-4">5.000.000 ₫</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Start Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer-content text-center py-4">
+                        <p>&copy; 2024 ClassiGrids. Bảo lưu mọi quyền.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================= Scripts ========================= -->
+    <script src="lib/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/route-guard.js"></script>
+    <script src="js/auth-navbar.js"></script>
+    <script src="js/checkout.js"></script>
+</body>
+
+</html>
