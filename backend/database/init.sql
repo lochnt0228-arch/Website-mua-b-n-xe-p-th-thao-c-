@@ -126,3 +126,26 @@ CREATE TABLE reviews (
     FOREIGN KEY (reviewer_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (reviewed_user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
+-- categories and brands
+INSERT INTO categories (name) VALUES
+('Xe leo núi (MTB)'),
+('Xe thể thao (Road/Racing)'),
+('Xe đạp thông thường (City)'),
+('Xe phích (Fixie)');
+
+INSERT INTO brands (name) VALUES
+-- Xe leo núi: chuyên địa hình, khung chắc
+('Trek'),          -- MTB
+('Specialized'),   -- MTB
+
+-- Xe thể thao: nhẹ, khí động học
+('Cannondale'),    -- Road
+('Cervélo'),       -- Road
+
+-- Xe thông thường: đi phố, bền, giá bình dân
+('Giant'),         -- City
+('Asama'),         -- City (thương hiệu Việt phổ biến)
+
+-- Xe phích (Fixie): không líp, urban style
+('State Bicycle'), -- Fixie
+('Quella');        -- Fixie

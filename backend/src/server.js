@@ -1,8 +1,9 @@
 // backend/src/server.js
 const express = require('express');
-const path = require('path');
-const app = express();
+const path    = require('path');
+require('dotenv').config();
 
+<<<<<<< HEAD
 // Cho phép Server đọc dữ liệu JSON từ các request POST/PUT (quan trọng để đọc req.body)
 app.use(express.json());
 
@@ -62,3 +63,30 @@ app.post('/api/auth/register', (req, res) => {
 
 
 app.listen(5000, () => console.log('Server chạy tại http://localhost:5000'));
+=======
+const app = express();
+app.use(express.json());
+app.use(express.static(path.join(__dirname, '../../static')));
+
+// ── Routes BE1 ──
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/auth',          authRoutes);
+app.use('/api/users/profile', userRoutes);
+
+// ── Routes BE2 ──
+const bikeRoutes    = require('./routes/bikeRoutes');
+const catalogRoutes = require('./routes/catalogRoutes');
+app.use('/api/bikes', bikeRoutes);
+app.use('/api',       catalogRoutes);
+
+// ── Routes BE3 (Payment) ──
+const paymentRoutes = require('./routes/paymentRoutes');
+const confirmRoutes = require('./routes/confirmRoutes');
+app.use('/api/orders',   paymentRoutes); // POST /api/orders, GET /api/orders/my, DELETE /api/orders/:id
+app.use('/api/payments', confirmRoutes); // POST /api/payments/:id/confirm
+
+app.listen(process.env.PORT || 5000, () =>
+  console.log(`Server chạy tại http://localhost:${process.env.PORT || 5000}`)
+);
+>>>>>>> origin/main
