@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # Dịch vụ Database (MySQL)
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_DATABASE=bike_marketplace
+      - TZ=Asia/Ho_Chi_Minh
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./backend/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # Dịch vụ Frontend (PHP Apache)
+  php-frontend:
+    image: php:8.2-apache
+    container_name: frontend
+    ports:
+      - "8080:80" # Đổi Frontend sang 3000 để nhường 8080 cho Backend
+    volumes:
+      - ./static:/var/www/html
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+    depends_on:
+      - node-backend
+
+  # Dịch vụ Backend (Node.js)
+  node-backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "5000:5000" # Backend chạy cổng 8080
+    volumes:
+      - ./backend:/app
+      - /app/node_modules # Tránh ghi đè node_modules trong container bằng thư mục máy host
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+      - DB_HOST=mysql-db
+      - DB_USER=root
+      - DB_PASSWORD=123
+      - DB_NAME=bike_marketplace
+      - JWT_SECRET=my_super_secret_jwt_key
+      - JWT_EXPIRES_IN=1d
+    depends_on:
+      - mysql-db
+
+volumes:
+  db_data:

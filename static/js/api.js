@@ -15,7 +15,7 @@
  * - api.request('POST', '/api/orders', data)
  */
 
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = '/api.php?path=';
 const TOKEN_KEY = 'auth_token';
 const USER_KEY = 'auth_user';
 
@@ -45,13 +45,15 @@ function hasToken() {
 
 // Lưu user info
 function setUser(user) {
+  if (user === undefined) return;
   localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 
 // Lấy user info
 function getUser() {
   const user = localStorage.getItem(USER_KEY);
-  return user ? JSON.parse(user) : null;
+  if (!user || user === 'undefined') return null;
+  return JSON.parse(user);
 }
 
 // Xóa user info
@@ -89,12 +91,12 @@ async function request(method, endpoint, body = null) {
     const data = await response.json();
 
     // Xử lý 401 - Token hết hạn hoặc không hợp lệ
-    if (response.status === 401) {
+    if (response.status === 401 && !endpoint.includes('/login')) {
       clearToken();
       clearUser();
       // Redirect tới login (nếu không phải trang login)
       if (!window.location.pathname.includes('/login.php')) {
-        window.location.href = '/login.html?expired=true';
+        window.location.href = '/login.php?expired=true';
       }
       return {
         success: false,
