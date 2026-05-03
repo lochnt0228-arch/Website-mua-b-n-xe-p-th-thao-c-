@@ -77,7 +77,7 @@ function renderProductDetails(product) {
         msgSold.style.display = 'block';
     } else {
         // Đang AVAILABLE
-        if (currentUser && currentUser.id === product.seller_id) {
+        if (currentUser && currentUser.user_id == product.seller_id) {
             // Nếu người đang xem là người đăng bán
             btnBuyNow.style.display = 'none';
             msgOwnProduct.style.display = 'block';

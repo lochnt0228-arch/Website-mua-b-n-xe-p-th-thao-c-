@@ -1,5 +1,6 @@
 -- 1. Khởi tạo Database và sử dụng
-CREATE DATABASE IF NOT EXISTS bike_marketplace;
+SET NAMES utf8mb4;
+CREATE DATABASE IF NOT EXISTS bike_marketplace CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE bike_marketplace;
 
 -- 2. Dọn dẹp an toàn (Tắt kiểm tra khóa ngoại trước khi xóa bảng)
@@ -149,3 +150,12 @@ INSERT INTO brands (name) VALUES
 -- Xe phích (Fixie): không líp, urban style
 ('State Bicycle'), -- Fixie
 ('Quella');        -- Fixie
+
+-- Bổ sung Dữ liệu giả (Dummy Data)
+INSERT INTO users (name, email, password_hash, role) VALUES
+('Người Bán Pro', 'seller@test.com', '$2a$10$j0x956XhHw6X7T9i2HhS5.a51R2.N2oQh/Vp1uJ9K1H3GfR8YmY3i', 'USER');
+
+INSERT INTO bike_posts (seller_id, title, description, price, category_id, brand_id, status, frame_size, frame_material) VALUES
+(1, 'Xe Đạp Địa Hình Giant XTC', 'Xe còn rất mới, chạy êm, phuộc nhún tốt, phù hợp leo núi.', 12500000, 1, 5, 'AVAILABLE', 'M', 'Hợp kim nhôm'),
+(1, 'Xe Đạp Đua Trek Emonda Cao Cấp', 'Khung carbon siêu nhẹ, lướt gió nhanh. Đã bảo dưỡng toàn bộ.', 28000000, 2, 1, 'AVAILABLE', 'L', 'Carbon'),
+(1, 'Xe Đạp Phố Asama Bền Bỉ', 'Thích hợp đi làm, đi học. Kèm sẵn giỏ xe và baga chắc chắn.', 3500000, 3, 6, 'AVAILABLE', 'S', 'Thép');

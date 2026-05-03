@@ -1,40 +1,46 @@
+/**
+ * ========================================
+ * SELL.JS - Xử lý đăng bài bán xe
+ * ========================================
+ */
+
 document.addEventListener('DOMContentLoaded', function () {
     const sellForm = document.getElementById('sellForm');
-    const btnSubmit = document.getElementById('btnSubmitSell');
+    if (!sellForm) return;
 
-    if (sellForm && btnSubmit) {
-        sellForm.addEventListener('submit', function (event) {
-            // Chặn hành vi submit mặc định của form
-            event.preventDefault();
+    sellForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
 
-            // Vô hiệu hóa nút và đổi text + thêm spinner
-            const originalText = btnSubmit.innerHTML;
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang xử lý...`;
+        const btnSubmit = document.getElementById('btnSubmitSell');
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = 'Đang xử lý...';
 
-            // Lấy thông tin từ form
-            const title = document.getElementById('title').value;
-            const price = document.getElementById('price').value;
-            const category = document.getElementById('category').value;
-            const description = document.getElementById('description').value;
+        const data = {
+            title: document.getElementById('title').value,
+            price: document.getElementById('price').value,
+            category_id: document.getElementById('category_id').value,
+            brand_id: document.getElementById('brand_id').value,
+            frame_size: document.getElementById('frame_size').value || null,
+            frame_material: document.getElementById('frame_material').value || null,
+            description: document.getElementById('description').value || null
+        };
 
-            console.log("Đang gọi API đăng bán xe với dữ liệu:", { title, price, category, description });
-
-            // Mock API request (Giả lập thời gian chờ 2 giây)
-            setTimeout(() => {
-                console.log("Đăng tin thành công!");
-                
-                // Khôi phục nút
+        try {
+            const result = await api.post('/api/bikes', data);
+            
+            if (result.success) {
+                alert('Đăng bán thành công! Sản phẩm của bạn đã lên sàn.');
+                window.location.href = 'my-ads.php';
+            } else {
+                alert('Lỗi: ' + result.message);
                 btnSubmit.disabled = false;
-                btnSubmit.innerHTML = originalText;
-                
-                // Reset form
-                sellForm.reset();
-
-                // Hiển thị thông báo thành công (có thể thay bằng Toast hoặc Alert)
-                alert("Đăng tin bán xe thành công!");
-
-            }, 2000);
-        });
-    }
+                btnSubmit.textContent = 'Đăng Bán';
+            }
+        } catch (err) {
+            console.error('Lỗi khi đăng bán:', err);
+            alert('Có lỗi xảy ra khi kết nối máy chủ.');
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = 'Đăng Bán';
+        }
+    });
 });

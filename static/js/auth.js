@@ -25,9 +25,15 @@ async function login(email, password) {
   const result = await api.post('/api/auth/login', { email, password });
 
   if (result.success && result.data && result.data.token) {
-    // Lưu token và user info
+    // Lưu token
     api.setToken(result.data.token);
-    api.setUser(result.data.user);
+    // Nếu backend trả user thì lưu luôn, nếu không thì fetch profile
+    if (result.data.user) {
+      api.setUser(result.data.user);
+    } else {
+      // Fetch profile từ server để lấy thông tin user
+      await fetchProfile();
+    }
   }
 
   return result;
@@ -58,7 +64,11 @@ async function register(name, email, password, passwordConfirm) {
   if (result.success && result.data && result.data.token) {
     // Tự động đăng nhập sau khi đăng ký thành công
     api.setToken(result.data.token);
-    api.setUser(result.data.user);
+    if (result.data.user) {
+      api.setUser(result.data.user);
+    } else {
+      await fetchProfile();
+    }
   }
 
   return result;
@@ -120,7 +130,7 @@ function isBuyer() {
  * Sử dụng khi cần cập nhật user info từ server
  */
 async function fetchProfile() {
-  const result = await api.get('/api/auth/profile');
+  const result = await api.get('/api/users/profile');
   
   if (result.success && result.data) {
     api.setUser(result.data);

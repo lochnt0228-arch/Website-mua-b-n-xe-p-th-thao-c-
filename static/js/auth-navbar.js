@@ -31,8 +31,20 @@ function buildAuthenticatedNavbar() {
   if (nav && !nav.querySelector('li:has(a[href*="sell.php"])')) {
     const sellItem = document.createElement('li');
     sellItem.className = 'nav-item';
-    sellItem.innerHTML = '<a href="sell.php" class="nav-link fw-bold text-primary">Đăng Bán</a>';
+    sellItem.innerHTML = '<a href="sell.php">Đăng Bán</a>';
     nav.appendChild(sellItem);
+  }
+
+  // Quản lý active state dựa trên trang hiện tại
+  if (nav) {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.php';
+    nav.querySelectorAll('.nav-item a').forEach(link => {
+      link.classList.remove('active');
+      const href = link.getAttribute('href');
+      if (href && currentPage.includes(href.replace('.php', ''))) {
+        link.classList.add('active');
+      }
+    });
   }
 
   // Thêm user dropdown
@@ -44,7 +56,6 @@ function buildAuthenticatedNavbar() {
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
         <li><a class="dropdown-item" href="profile.php"><i class="lni lni-user"></i> Hồ Sơ Cá Nhân</a></li>
         <li><a class="dropdown-item" href="my-ads.php"><i class="lni lni-package"></i> Tin Đăng Của Tôi</a></li>
-        <li><a class="dropdown-item" href="cart.php"><i class="lni lni-cart"></i> Giỏ Hàng</a></li>
         <li><a class="dropdown-item" href="my-orders.php"><i class="lni lni-files"></i> Đơn Mua</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item text-danger" href="#" id="auth-logout-btn"><i class="lni lni-exit"></i> Đăng Xuất</a></li>
@@ -98,6 +109,18 @@ function updateNavbar() {
     buildAuthenticatedNavbar();
   } else {
     buildUnauthenticatedNavbar();
+    // Quản lý active state cho user chưa đăng nhập
+    const nav = document.querySelector('ul#nav');
+    if (nav) {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.php';
+      nav.querySelectorAll('.nav-item a').forEach(link => {
+        link.classList.remove('active');
+        const href = link.getAttribute('href');
+        if (href && currentPage.includes(href.replace('.php', ''))) {
+          link.classList.add('active');
+        }
+      });
+    }
   }
 }
 

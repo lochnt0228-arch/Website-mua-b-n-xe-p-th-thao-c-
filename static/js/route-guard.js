@@ -18,11 +18,10 @@
  */
 const PROTECTED_ROUTES = [
   '/sell.php',
-  '/cart.php',
   '/profile.php',
+  '/checkout.php',
   '/my-orders.php',
-  '/my-ads.php',
-  '/messages.php'
+  '/my-ads.php'
 ];
 
 /**
@@ -65,7 +64,7 @@ function checkAuth() {
     const currentUrl = window.location.pathname + window.location.search;
     sessionStorage.setItem('redirectAfterLogin', currentUrl);
     
-    window.location.href = '/login.html?next=' + encodeURIComponent(currentUrl);
+    window.location.href = '/login.php?next=' + encodeURIComponent(currentUrl);
     return false;
   }
 
@@ -94,7 +93,7 @@ function requireAuth() {
   if (!auth.isAuthenticated()) {
     const currentUrl = window.location.pathname + window.location.search;
     sessionStorage.setItem('redirectAfterLogin', currentUrl);
-    window.location.href = '/login.html?next=' + encodeURIComponent(currentUrl);
+    window.location.href = '/login.php?next=' + encodeURIComponent(currentUrl);
   }
 }
 
