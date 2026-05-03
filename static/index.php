@@ -39,20 +39,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-12 p-0">
-                                    <div class="search-input">
-                                        <label for="location"><i class="lni lni-map-marker theme-color"></i></label>
-                                        <select name="location" id="location">
-                                            <option value="none" selected disabled>Địa Điểm</option>
-                                            <option value="none">Hà Nội</option>
-                                            <option value="none">TP. Hồ Chí Minh</option>
-                                            <option value="none">Đà Nẵng</option>
-                                            <option value="none">Hải Phòng</option>
-                                            <option value="none">Cần Thơ</option>
-                                            <option value="none">Bình Dương</option>
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="col-lg-2 col-md-2 col-12 p-0">
                                     <div class="search-btn button">
                                         <button class="btn"><i class="lni lni-search-alt"></i> Tìm Kiếm</button>
@@ -217,7 +203,7 @@
                         <!-- Start Single Grid -->
                         <div class="single-grid wow fadeInUp" data-wow-delay=".2s">
                             <div class="image">
-                                <a href="item-details.php" class="thumbnail"><img src="assets/images/items-grid/img1.jpg" alt="#"></a>
+                                <a href="product-details.php?id=1" class="thumbnail"><img src="assets/images/items-grid/img1.jpg" alt="#"></a>
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)"><img src="assets/images/items-grid/author-1.jpg" alt="#">
@@ -230,7 +216,7 @@
                                 <div class="top-content">
                                     <a href="javascript:void(0)" class="tag">Xe Đạp Địa Hình</a>
                                     <h3 class="title">
-                                        <a href="item-details.php">Xe Đạp Giant XTC Pro</a>
+                                        <a href="product-details.php?id=1">Xe Đạp Giant XTC Pro</a>
                                     </h3>
                                     <p class="update-time">Cập nhật: 1 giờ trước</p>
                                     <ul class="rating">
@@ -258,7 +244,7 @@
                         <!-- Start Single Grid -->
                         <div class="single-grid wow fadeInUp" data-wow-delay=".4s">
                             <div class="image">
-                                <a href="item-details.php" class="thumbnail"><img src="assets/images/items-grid/img2.jpg" alt="#"></a>
+                                <a href="product-details.php?id=1" class="thumbnail"><img src="assets/images/items-grid/img2.jpg" alt="#"></a>
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)"><img src="assets/images/items-grid/author-2.jpg" alt="#">
@@ -271,7 +257,7 @@
                                 <div class="top-content">
                                     <a href="javascript:void(0)" class="tag">Xe Đạp Đua</a>
                                     <h3 class="title">
-                                        <a href="item-details.php">Xe Đạp Đua Trek Emonda</a>
+                                        <a href="product-details.php?id=1">Xe Đạp Đua Trek Emonda</a>
                                     </h3>
                                     <p class="update-time">Cập nhật: 2 giờ trước</p>
                                     <ul class="rating">
@@ -299,7 +285,7 @@
                         <!-- Start Single Grid -->
                         <div class="single-grid wow fadeInUp" data-wow-delay=".6s">
                             <div class="image">
-                                <a href="item-details.php" class="thumbnail"><img src="assets/images/items-grid/img3.jpg" alt="#"></a>
+                                <a href="product-details.php?id=1" class="thumbnail"><img src="assets/images/items-grid/img3.jpg" alt="#"></a>
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)"><img src="assets/images/items-grid/author-3.jpg" alt="#">
@@ -313,7 +299,7 @@
                                 <div class="top-content">
                                     <a href="javascript:void(0)" class="tag">Phụ Kiện</a>
                                     <h3 class="title">
-                                        <a href="item-details.php">Mũ Bảo Hiểm Giro</a>
+                                        <a href="product-details.php?id=1">Mũ Bảo Hiểm Giro</a>
                                     </h3>
                                     <p class="update-time">Cập nhật: 3 giờ trước</p>
                                     <ul class="rating">
@@ -341,7 +327,7 @@
                         <!-- Start Single Grid -->
                         <div class="single-grid wow fadeInUp" data-wow-delay=".2s">
                             <div class="image">
-                                <a href="item-details.php" class="thumbnail"><img src="assets/images/items-grid/img4.jpg" alt="#"></a>
+                                <a href="product-details.php?id=1" class="thumbnail"><img src="assets/images/items-grid/img4.jpg" alt="#"></a>
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)"><img src="assets/images/items-grid/author-4.jpg" alt="#">
@@ -354,7 +340,7 @@
                                 <div class="top-content">
                                     <a href="javascript:void(0)" class="tag">Xe Đạp Touring</a>
                                     <h3 class="title">
-                                        <a href="item-details.php">Xe Đạp Touring Surly</a>
+                                        <a href="product-details.php?id=1">Xe Đạp Touring Surly</a>
                                     </h3>
                                     <p class="update-time">Cập nhật: 4 giờ trước</p>
                                     <ul class="rating">
@@ -382,7 +368,7 @@
                         <!-- Start Single Grid -->
                         <div class="single-grid wow fadeInUp" data-wow-delay=".4s">
                             <div class="image">
-                                <a href="item-details.php" class="thumbnail"><img src="assets/images/items-grid/img5.jpg" alt="#"></a>
+                                <a href="product-details.php?id=1" class="thumbnail"><img src="assets/images/items-grid/img5.jpg" alt="#"></a>
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)"><img src="assets/images/items-grid/author-5.jpg" alt="#">
@@ -396,7 +382,7 @@
                                 <div class="top-content">
                                     <a href="javascript:void(0)" class="tag">Đồng Hồ Thể Thao</a>
                                     <h3 class="title">
-                                        <a href="item-details.php">Garmin Forerunner 255</a>
+                                        <a href="product-details.php?id=1">Garmin Forerunner 255</a>
                                     </h3>
                                     <p class="update-time">Cập nhật: 5 giờ trước</p>
                                     <ul class="rating">
@@ -424,7 +410,7 @@
                         <!-- Start Single Grid -->
                         <div class="single-grid wow fadeInUp" data-wow-delay=".6s">
                             <div class="image">
-                                <a href="item-details.php" class="thumbnail"><img src="assets/images/items-grid/img6.jpg" alt="#"></a>
+                                <a href="product-details.php?id=1" class="thumbnail"><img src="assets/images/items-grid/img6.jpg" alt="#"></a>
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)"><img src="assets/images/items-grid/author-6.jpg" alt="#">
@@ -437,7 +423,7 @@
                                 <div class="top-content">
                                     <a href="javascript:void(0)" class="tag">Dịch Vụ Sửa Chữa</a>
                                     <h3 class="title">
-                                        <a href="item-details.php">Bảo Dưỡng Toàn Bộ Xe</a>
+                                        <a href="product-details.php?id=1">Bảo Dưỡng Toàn Bộ Xe</a>
                                     </h3>
                                     <p class="update-time">Cập nhật: 7 giờ trước</p>
                                     <ul class="rating">
