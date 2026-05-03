@@ -6,6 +6,8 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../../static')));
+// Phục vụ ảnh upload: truy cập qua /uploads/<tên-file>
+app.use('/uploads', express.static(path.join(__dirname, '..', '..', 'uploads')));
 
 // ── Routes BE1 ──
 const authRoutes = require('./routes/authRoutes');
@@ -16,7 +18,9 @@ app.use('/api/users/profile', userRoutes);
 // ── Routes BE2 ──
 const bikeRoutes    = require('./routes/bikeRoutes');
 const catalogRoutes = require('./routes/catalogRoutes');
+const imageRoutes   = require('./routes/imageRoutes');
 app.use('/api/bikes', bikeRoutes);
+app.use('/api/bikes/:id/images', imageRoutes); // POST & DELETE ảnh của tin đăng
 app.use('/api',       catalogRoutes);
 
 // ── Routes BE3 (Payment) ──
