@@ -159,3 +159,13 @@ INSERT INTO bike_posts (seller_id, title, description, price, category_id, brand
 (1, 'Xe Đạp Địa Hình Giant XTC', 'Xe còn rất mới, chạy êm, phuộc nhún tốt, phù hợp leo núi.', 12500000, 1, 5, 'AVAILABLE', 'M', 'Hợp kim nhôm'),
 (1, 'Xe Đạp Đua Trek Emonda Cao Cấp', 'Khung carbon siêu nhẹ, lướt gió nhanh. Đã bảo dưỡng toàn bộ.', 28000000, 2, 1, 'AVAILABLE', 'L', 'Carbon'),
 (1, 'Xe Đạp Phố Asama Bền Bỉ', 'Thích hợp đi làm, đi học. Kèm sẵn giỏ xe và baga chắc chắn.', 3500000, 3, 6, 'AVAILABLE', 'S', 'Thép');
+-- ── Bảng lưu ảnh tin đăng (thêm để hỗ trợ upload ảnh local) ─────────────────
+CREATE TABLE IF NOT EXISTS bike_images (
+    image_id   INT PRIMARY KEY AUTO_INCREMENT,
+    post_id    INT NOT NULL,
+    image_url  VARCHAR(500) NOT NULL,         -- Đường dẫn: /uploads/<tên-file>
+    is_primary BOOLEAN      DEFAULT FALSE,    -- TRUE = ảnh đại diện ngoài danh sách
+    sort_order TINYINT      DEFAULT 0,        -- Thứ tự hiển thị (0 = đầu tiên)
+    created_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES bike_posts(post_id) ON DELETE CASCADE
+);
