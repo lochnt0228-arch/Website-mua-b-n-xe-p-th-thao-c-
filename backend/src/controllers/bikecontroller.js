@@ -41,17 +41,24 @@ exports.getBikes = async (req, res) => {
     const page     = Math.max(1, parseInt(req.query.page)  || 1);
     const limit    = Math.min(50, parseInt(req.query.limit) || 10);
     const offset   = (page - 1) * limit;
-    const { category_id, brand_id, keyword } = req.query;
+    
+    const status      = req.query.status || 'AVAILABLE';
+    const seller_id   = req.query.seller_id;
+    const category_id = req.query.category_id;
+    const brand_id    = req.query.brand_id;
+    const keyword     = req.query.keyword;
 
-    // Xây WHERE động, vẫn dùng Prepared Statement (dấu ?)
-    let where  = ["bp.status = 'AVAILABLE'"];
+    let whereSQL = 'WHERE 1=1';
     let params = [];
 
-    if (category_id) { where.push('bp.category_id = ?'); params.push(category_id); }
-    if (brand_id)    { where.push('bp.brand_id = ?');    params.push(brand_id); }
-    if (keyword)     { where.push('bp.title LIKE ?');    params.push(`%${keyword}%`); }
-
-    const whereSQL = 'WHERE ' + where.join(' AND ');
+    if (status && status !== 'ALL') {
+      whereSQL += ' AND bp.status = ?';
+      params.push(status);
+    }
+    if (seller_id)   { whereSQL += ' AND bp.seller_id = ?';   params.push(seller_id); }
+    if (category_id) { whereSQL += ' AND bp.category_id = ?'; params.push(category_id); }
+    if (brand_id)    { whereSQL += ' AND bp.brand_id = ?';    params.push(brand_id); }
+    if (keyword)     { whereSQL += ' AND bp.title LIKE ?';    params.push(`%${keyword}%`); }
 
     const [rows] = await db.query(
       `SELECT bp.post_id, bp.title, bp.price, bp.status,
@@ -65,7 +72,7 @@ exports.getBikes = async (req, res) => {
        JOIN categories c ON bp.category_id = c.category_id
        JOIN brands     b ON bp.brand_id    = b.brand_id
        ${whereSQL}
-       ORDER BY bp.created_at DESC
+       ORDER BY bp.post_id DESC
        LIMIT ? OFFSET ?`,
       [...params, limit, offset]
     );

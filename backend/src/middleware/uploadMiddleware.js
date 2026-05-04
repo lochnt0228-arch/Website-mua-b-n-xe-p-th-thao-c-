@@ -2,10 +2,14 @@ const multer = require('multer');
 const path   = require('path');
 const fs     = require('fs');
 
-// Đảm bảo thư mục uploads/ tồn tại, nếu chưa có thì tự tạo
-const UPLOAD_DIR = path.join(__dirname, '..', '..', '..', 'uploads');
+// Trong Docker, chúng ta mount ./uploads vào /uploads của container
+const UPLOAD_DIR = process.env.NODE_ENV === 'production' ? '/uploads' : path.join(__dirname, '..', '..', '..', 'uploads');
 if (!fs.existsSync(UPLOAD_DIR)) {
-  fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+  try {
+    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+  } catch (e) {
+    console.log('Thư mục upload đã sẵn sàng hoặc đang dùng volume mount');
+  }
 }
 
 // ── Cấu hình nơi lưu file ────────────────────────────────────────────────────
