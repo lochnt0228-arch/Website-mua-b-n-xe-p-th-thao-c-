@@ -44,6 +44,9 @@ function renderProductDetails(product) {
     document.getElementById('bc-category').textContent = product.category_name || "Danh mục";
     document.getElementById('pd-category').textContent = product.category_name || "N/A";
     document.getElementById('pd-brand').textContent = product.brand_name || "N/A";
+    document.getElementById('pd-seller-name').textContent = product.seller_name || "Người dùng";
+    document.getElementById('pd-frame-size').textContent = product.frame_size || "N/A";
+    document.getElementById('pd-frame-material').textContent = product.frame_material || "N/A";
     
     // Status badges
     let statusText = "Đang bán";
@@ -56,35 +59,71 @@ function renderProductDetails(product) {
     const dateObj = new Date(product.created_at);
     document.getElementById('pd-created-at').textContent = dateObj.toLocaleDateString('vi-VN');
 
-    // Mở rộng
+    // Description
     document.getElementById('pd-description').textContent = product.description || "Không có mô tả.";
-    document.getElementById('pd-frame-size').textContent = product.frame_size || "Không xác định";
-    document.getElementById('pd-frame-material').textContent = product.frame_material || "Không xác định";
-    
-    // Thông tin người bán
-    document.getElementById('pd-seller-name').textContent = product.seller_name || "Người dùng ẩn danh";
 
-    // 3. Xử lý nút Mua Hàng
+    // ── Xử lý Hình ảnh ──────────────────────────────────────────────────────
+    const currentImg = document.getElementById('current');
+    const thumbContainer = document.getElementById('thumbnails');
+    
+    if (product.images && product.images.length > 0) {
+        // Có ảnh thật
+        const primary = product.images.find(img => img.is_primary) || product.images[0];
+        currentImg.src = primary.image_url;
+
+        // Render thumbnails
+        thumbContainer.innerHTML = '';
+        product.images.forEach((img, index) => {
+            const thumb = document.createElement('img');
+            thumb.src = img.image_url;
+            thumb.alt = `Ảnh ${index + 1}`;
+            thumb.style.width = '80px';
+            thumb.style.height = '80px';
+            thumb.style.objectFit = 'cover';
+            thumb.style.cursor = 'pointer';
+            thumb.style.borderRadius = '6px';
+            thumb.style.border = '2px solid #eee';
+            thumb.style.padding = '2px';
+            
+            if (img.image_url === currentImg.src) {
+                thumb.style.borderColor = '#6259ca';
+                thumb.style.boxShadow = '0 0 5px rgba(98, 89, 202, 0.5)';
+            }
+
+            thumb.addEventListener('click', function() {
+                currentImg.src = this.src;
+                // Highlight thumb đang chọn
+                Array.from(thumbContainer.children).forEach(c => {
+                    c.style.borderColor = '#eee';
+                    c.style.boxShadow = 'none';
+                });
+                this.style.borderColor = '#6259ca';
+                this.style.boxShadow = '0 0 5px rgba(98, 89, 202, 0.5)';
+            });
+            thumbContainer.appendChild(thumb);
+        });
+    } else {
+        // Không có ảnh -> dùng placeholder
+        currentImg.src = 'assets/images/items-grid/img1.jpg';
+        thumbContainer.innerHTML = '<p class="text-muted small">Người bán không cung cấp thêm ảnh.</p>';
+    }
+
+    // ── Kiểm tra quyền mua ──────────────────────────────────────────────────
+    const currentUser = auth.getCurrentUser();
     const btnBuyNow = document.getElementById('btn-buy-now');
     const msgOwnProduct = document.getElementById('msg-own-product');
     const msgSold = document.getElementById('msg-sold');
 
-    const currentUser = auth.getCurrentUser();
-
     if (product.status !== 'AVAILABLE') {
-        // Nếu không AVAILABLE thì ẩn nút, hiện thông báo
-        btnBuyNow.style.display = 'none';
         msgSold.style.display = 'block';
+        btnBuyNow.style.display = 'none';
     } else {
-        // Đang AVAILABLE
         if (currentUser && currentUser.user_id == product.seller_id) {
-            // Nếu người đang xem là người đăng bán
             btnBuyNow.style.display = 'none';
             msgOwnProduct.style.display = 'block';
         } else {
-            // Người xem hợp lệ
             btnBuyNow.style.display = 'block';
-            btnBuyNow.href = `checkout.php?id=${product.post_id}`; // Redirect tới checkout
+            btnBuyNow.href = `checkout.php?id=${product.post_id}`;
         }
     }
 }

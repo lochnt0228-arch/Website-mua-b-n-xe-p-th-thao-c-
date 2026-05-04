@@ -29,8 +29,11 @@
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-images">
                             <main id="gallery">
-                                <div class="main-img">
-                                    <img src="https://via.placeholder.com/1000x670?text=Hình+ảnh+xe" id="current" alt="Hình ảnh sản phẩm">
+                                <div class="main-img mb-3">
+                                    <img src="assets/images/items-grid/img1.jpg" id="current" alt="Hình ảnh sản phẩm" style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px;">
+                                </div>
+                                <div id="thumbnails" class="d-flex gap-2 flex-wrap">
+                                    <!-- Thumbnails will be injected here -->
                                 </div>
                             </main>
                         </div>

@@ -20,25 +20,27 @@ services:
     image: php:8.2-apache
     container_name: frontend
     ports:
-      - "8080:80" # Đổi Frontend sang 3000 để nhường 8080 cho Backend
+      - "8080:80"
     volumes:
       - ./static:/var/www/html
+      - ./uploads:/var/www/html/uploads # Quan trọng: Chia sẻ thư mục ảnh cho Frontend
     environment:
       - TZ=Asia/Ho_Chi_Minh
     depends_on:
       - node-backend
 
   # Dịch vụ Backend (Node.js)
-  node-backend:
+  node-backend: # Tên service là node-backend
     build: 
       context: ./backend
       dockerfile: Dockerfile
-    container_name: backend
+    container_name: backend # Tên container là backend
     ports:
-      - "5000:5000" # Backend chạy cổng 8080
+      - "5000:5000"
     volumes:
       - ./backend:/app
-      - /app/node_modules # Tránh ghi đè node_modules trong container bằng thư mục máy host
+      - ./uploads:/uploads
+      - /app/node_modules
     environment:
       - TZ=Asia/Ho_Chi_Minh
       - DB_HOST=mysql-db

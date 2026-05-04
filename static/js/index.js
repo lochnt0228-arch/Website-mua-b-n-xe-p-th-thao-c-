@@ -26,7 +26,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             bikes.forEach((bike, idx) => {
                 const formatPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(bike.price);
                 const date = new Date(bike.created_at).toLocaleDateString('vi-VN');
-                const bikeImg = localImages[idx % localImages.length];
+                
+                // Ưu tiên dùng ảnh thật từ server, nếu không có mới dùng placeholder
+                const bikeImg = bike.image_url ? bike.image_url : localImages[idx % localImages.length];
                 const avatarImg = authorImages[idx % authorImages.length];
                 
                 html += `
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         <div class="single-grid" style="visibility: visible;">
                             <div class="image">
                                 <a href="product-details.php?id=${bike.post_id}" class="thumbnail">
-                                    <img src="${bikeImg}" alt="#">
+                                    <img src="${bikeImg}" alt="#" style="width: 100%; height: 230px; object-fit: cover; border-radius: 8px 8px 0 0;">
                                 </a>
                                 <div class="author">
                                     <div class="author-image">

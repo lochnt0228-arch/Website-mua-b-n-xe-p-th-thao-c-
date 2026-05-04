@@ -66,6 +66,13 @@
                                         <textarea class="form-control" id="description" rows="5" placeholder="Mô tả chi tiết sản phẩm..."></textarea>
                                     </div>
 
+                                    <div class="mb-4">
+                                        <label for="images" class="form-label">Hình Ảnh (Tối đa 5 ảnh, định dạng JPG/PNG/WEBP)</label>
+                                        <input type="file" class="form-control" id="images" accept="image/*" multiple>
+                                        <div id="image-preview" class="mt-2 d-flex flex-wrap gap-2"></div>
+                                        <small class="text-muted">Ảnh đầu tiên sẽ được chọn làm ảnh đại diện.</small>
+                                    </div>
+
                                     <button type="submit" class="btn btn-primary w-100" id="btnSubmitSell">Đăng Bán</button>
                                 </form>
                             </div>

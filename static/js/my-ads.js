@@ -48,10 +48,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                 else if (bike.status === 'SOLD') statusBadge = '<span class="badge bg-danger">Đã bán</span>';
                 else statusBadge = `<span class="badge bg-secondary">${bike.status}</span>`;
 
+                const bikeImg = bike.image_url ? bike.image_url : `assets/images/items-grid/img${(idx % 6) + 1}.jpg`;
+
                 html += `
                     <tr>
                         <td>#${bike.post_id}</td>
-                        <td><img src="assets/images/items-grid/img${(idx % 6) + 1}.jpg" alt="Xe" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;"></td>
+                        <td><img src="${bikeImg}" alt="Xe" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;"></td>
                         <td class="fw-bold">${bike.title}</td>
                         <td class="text-primary fw-bold">${formatPrice}</td>
                         <td>${statusBadge}</td>

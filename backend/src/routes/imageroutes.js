@@ -7,7 +7,7 @@ const controller = require('../controllers/imageController');
 
 // Xử lý lỗi của multer (file sai định dạng, vượt dung lượng...)
 const handleUpload = (req, res, next) => {
-  upload.array('images', 5)(req, res, (err) => {
+  upload.any()(req, res, (err) => {
     if (err) {
       return res.status(400).json({
         success: false,

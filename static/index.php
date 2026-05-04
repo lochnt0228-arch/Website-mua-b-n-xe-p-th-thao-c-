@@ -602,6 +602,25 @@
     </a>
 
     <!-- ========================= JS here ========================= -->
+    <style>
+        .single-grid {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .single-grid .content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .single-grid .image img {
+            transition: transform 0.3s ease;
+        }
+        .single-grid:hover .image img {
+            transform: scale(1.05);
+        }
+    </style>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/tiny-slider.js"></script>

@@ -1,10 +1,9 @@
 <?php
 /**
  * Simple PHP Proxy to bypass CORS issues.
- * Forwards requests from the frontend to the internal node backend container.
+ * Supports JSON and Multipart/form-data (File Uploads)
  */
 
-// Handle preflight OPTIONS requests directly
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
@@ -18,8 +17,6 @@ if (!function_exists('getallheaders')) {
                 $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
             } else if ($name == "CONTENT_TYPE") {
                 $headers["Content-Type"] = $value;
-            } else if ($name == "CONTENT_LENGTH") {
-                $headers["Content-Length"] = $value;
             }
         }
         return $headers;
@@ -27,25 +24,23 @@ if (!function_exists('getallheaders')) {
 }
 
 $method = $_SERVER['REQUEST_METHOD'];
-
-// Parse query string manually to preserve parameters after the ? in the path
 $queryString = $_SERVER['QUERY_STRING'];
 $path = '';
 if (strpos($queryString, 'path=') === 0) {
-    $path = substr($queryString, 5); // Extract everything after 'path='
+    $path = substr($queryString, 5);
 }
 
-// Proxy to the internal Docker backend container on port 5000
 $url = 'http://backend:5000' . $path;
-
 $headers = getallheaders();
 $curlHeaders = array();
 
-// Forward relevant headers
 foreach ($headers as $key => $value) {
     $keyLower = strtolower($key);
-    // Ignore these headers as cURL handles them automatically
+    // Khi upload file, để cURL tự tạo Content-Type với boundary mới
     if ($keyLower !== 'host' && $keyLower !== 'connection' && $keyLower !== 'content-length' && $keyLower !== 'accept-encoding') {
+        if ($keyLower === 'content-type' && strpos($value, 'multipart/form-data') !== false) {
+            continue; 
+        }
         $curlHeaders[] = "$key: $value";
     }
 }
@@ -57,32 +52,45 @@ curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
 curl_setopt($ch, CURLOPT_HTTPHEADER, $curlHeaders);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
-// Forward request body
+// Xử lý Body
 if ($method === 'POST' || $method === 'PUT' || $method === 'PATCH') {
-    $input = file_get_contents('php://input');
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $input);
+    $contentType = isset($headers['Content-Type']) ? $headers['Content-Type'] : '';
+    
+    if (strpos($contentType, 'multipart/form-data') !== false) {
+        // Chuyển tiếp file upload
+        $postData = $_POST;
+        foreach ($_FILES as $key => $file) {
+            if (is_array($file['tmp_name'])) {
+                foreach ($file['tmp_name'] as $index => $tmpName) {
+                    if (!empty($tmpName)) {
+                        // Gửi nhiều file với cùng một field name (vd: images)
+                        // PHP cURL hỗ trợ mảng này bằng cú pháp images[0], images[1]... nhưng phải khớp logic BE
+                        $postData[$key . '[' . $index . ']'] = new CURLFile($tmpName, $file['type'][$index], $file['name'][$index]);
+                    }
+                }
+            } else {
+                $postData[$key] = new CURLFile($file['tmp_name'], $file['type'], $file['name']);
+            }
+        }
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+    } else {
+        // Chuyển tiếp JSON hoặc form bình thường
+        $input = file_get_contents('php://input');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $input);
+    }
 }
 
 $response = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+$resContentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 
 if (curl_errno($ch)) {
     http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Lỗi Proxy: Không thể kết nối tới backend (' . curl_error($ch) . ')'
-    ]);
-    curl_close($ch);
-    exit;
+    echo json_encode(['success' => false, 'message' => 'Lỗi Proxy: ' . curl_error($ch)]);
+} else {
+    http_response_code($httpCode);
+    if ($resContentType) header("Content-Type: $resContentType");
+    echo $response;
 }
 curl_close($ch);
-
-// Set the response code and content type to match the backend's response
-http_response_code($httpCode);
-if ($contentType) {
-    header("Content-Type: $contentType");
-}
-
-echo $response;
 ?>

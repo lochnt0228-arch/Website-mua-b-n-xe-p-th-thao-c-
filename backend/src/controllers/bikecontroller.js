@@ -58,7 +58,8 @@ exports.getBikes = async (req, res) => {
               bp.frame_size, bp.frame_material, bp.created_at,
               u.name  AS seller_name,
               c.name  AS category_name,
-              b.name  AS brand_name
+              b.name  AS brand_name,
+              (SELECT image_url FROM bike_images WHERE post_id = bp.post_id AND is_primary = TRUE LIMIT 1) AS image_url
        FROM bike_posts bp
        JOIN users      u ON bp.seller_id   = u.user_id
        JOIN categories c ON bp.category_id = c.category_id
@@ -109,7 +110,17 @@ exports.getBikeById = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Không tìm thấy bài đăng', data: null });
     }
 
-    return res.json({ success: true, message: 'OK', data: rows[0] });
+    const bike = rows[0];
+
+    // Lấy danh sách ảnh của xe
+    const [images] = await db.query(
+      'SELECT image_id, image_url, is_primary FROM bike_images WHERE post_id = ? ORDER BY sort_order ASC',
+      [req.params.id]
+    );
+
+    bike.images = images;
+
+    return res.json({ success: true, message: 'OK', data: bike });
 
   } catch (err) {
     return res.status(500).json({ success: false, message: 'Lỗi server', data: null });
