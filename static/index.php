@@ -26,16 +26,8 @@
                                 <div class="col-lg-3 col-md-3 col-12 p-0" style="width: 25%">
                                     <div class="search-input">
                                         <label for="category"><i class="lni lni-grid-alt theme-color"></i></label>
-                                        <select name="category" id="category">
-                                            <option value="none" selected disabled>Danh Mục</option>
-                                            <option value="none">Xe Đạp Địa Hình (MTB)</option>
-                                            <option value="none">Xe Đạp Đua (Road)</option>
-                                            <option value="none">Xe Đạp Touring</option>
-                                            <option value="none">Xe Đạp Gấp</option>
-                                            <option value="none">Phụ Tùng Xe</option>
-                                            <option value="none">Đồ Bảo Hộ</option>
-                                            <option value="none">Quần Áo Đạp Xe</option>
-                                            <option value="none">Dịch Vụ Sửa Chữa</option>
+                                        <select name="category" id="search-category-select">
+                                            <option value="" selected>Tất cả danh mục</option>
                                         </select>
                                     </div>
                                 </div>
@@ -53,23 +45,7 @@
         </div>
     </section>
     <!-- End Hero Area -->
-
-    <!-- Start Categories Area -->
-    <section class="categories">
-        <div class="container">
-            <div class="cat-inner">
-                <div class="row">
-                    <div class="col-12 p-0">
-                        <div id="category-stats-list" class="category-slider">
-                            <!-- Dữ liệu động sẽ được đổ vào đây bằng JS -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /End Categories Area -->
-
+    
     <!-- Start Items Grid Area -->
     <section class="items-grid section custom-padding">
         <div class="container">
@@ -248,13 +224,13 @@
     <script src="js/auth.js"></script>
     <script src="js/route-guard.js"></script>
     <script src="js/auth-navbar.js"></script>
-    <script src="js/home-stats.js"></script>
-    <script src="js/index.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/index.js"></script>
     <script type="text/javascript">
         //========= Category Slider 
-        tns({
-            container: '.category-slider',
+        if (document.querySelector('.category-slider')) {
+            tns({
+                container: '.category-slider',
             items: 3,
             slideBy: 'page',
             autoplay: false,
@@ -281,6 +257,7 @@
                 }
             }
         });
+        }
     </script>
 </body>
 

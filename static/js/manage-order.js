@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             if (noteIndex !== -1) {
                 baseAddress = order.display_address.substring(0, noteIndex).trim();
-                noteText = order.display_address.substring(noteIndex + 1, order.display_address.lastIndexOf(')'));
+                noteText = order.display_address.substring(noteIndex + 9, order.display_address.lastIndexOf(')'));
             }
             if (elAddress) {
                 elAddress.innerHTML = `
