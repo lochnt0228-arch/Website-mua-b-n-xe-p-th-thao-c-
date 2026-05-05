@@ -414,7 +414,7 @@ MAX_FILES_PER_POST=5
 | 1 | Huỳnh Nguyễn Tiến Lộc | **BE 1 + BE 2** | Auth + Profile và Bike + Catalog | `authController.js`, `userController.js`, `bikeController.js`, `catalogController.js` |
 | 2 | Nguyễn Hoàng Nam | **BE 3** | Orders + Payment | `paymentController.js` |
 | 3 | Nguyễn Thụy Thúy Vy | **FE** | UI + JavaScript | `static/js/*.js` |
-| 4 | Huỳnh Nguyễn Tiến Lộc + NGuyễn Thụy Thúy Vy | **Check dự án ** | Liên kết tất cả module và đảm bảo hệ thống chạy hoàn chỉnh. 
+| 4 | Huỳnh Nguyễn Tiến Lộc + NGuyễn Thụy Thúy Vy | **Check dự án** | Liên kết tất cả module và đảm bảo hệ thống chạy hoàn chỉnh. 
 
 ---
 
