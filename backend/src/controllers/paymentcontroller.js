@@ -302,3 +302,109 @@ exports.cancelOrder = async (req, res) => {
     conn.release();
   }
 };
+
+// GET /api/orders/:order_id — Chi tiết 1 đơn hàng
+exports.getOrderById = async (req, res) => {
+  const { order_id } = req.params;
+  const user_id = req.user.user_id;
+
+  try {
+    const [rows] = await db.query(
+      `SELECT 
+         o.*, 
+         bp.title AS bike_title, bp.seller_id,
+         u_buyer.name AS buyer_name, u_buyer.email AS buyer_email,
+         u_seller.name AS seller_name, u_seller.email AS seller_email,
+         (SELECT image_url FROM bike_images WHERE post_id = bp.post_id LIMIT 1) AS image_url
+       FROM orders o
+       JOIN bike_posts bp ON o.post_id = bp.post_id
+       JOIN users u_buyer ON o.buyer_id = u_buyer.user_id
+       JOIN users u_seller ON bp.seller_id = u_seller.user_id
+       WHERE o.order_id = ?`,
+      [order_id]
+    );
+
+    const order = rows[0];
+
+    // Tách chuỗi shipping_address: "Tên - SĐT - Địa chỉ"
+    const addrParts = order.shipping_address.split(' - ');
+    order.display_name = addrParts[0] || order.buyer_name;
+    order.display_phone = addrParts[1] || 'Chưa cập nhật';
+    order.display_address = addrParts[2] || order.shipping_address;
+
+    if (order.buyer_id !== user_id && order.seller_id !== user_id) {
+      return res.status(403).json({ success: false, message: 'Bạn không có quyền xem đơn hàng này' });
+    }
+    return res.json({ success: true, message: 'OK', data: order });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Lỗi server' });
+  }
+};
+
+// PUT /api/orders/:order_id/status — Cập nhật trạng thái đơn hàng
+exports.updateOrderStatus = async (req, res) => {
+  const { order_id } = req.params;
+  const { status } = req.body;
+  const user_id = req.user.user_id;
+
+  try {
+    const [orders] = await db.query(
+      `SELECT o.*, bp.seller_id FROM orders o 
+       JOIN bike_posts bp ON o.post_id = bp.post_id 
+       WHERE o.order_id = ?`,
+      [order_id]
+    );
+
+    if (orders.length === 0) return res.status(404).json({ success: false, message: 'Không tìm thấy đơn hàng' });
+    const order = orders[0];
+    if (order.seller_id !== user_id) return res.status(403).json({ success: false, message: 'Chỉ người bán mới có quyền cập nhật' });
+
+    await db.query("UPDATE orders SET status = ? WHERE order_id = ?", [status, order_id]);
+    if (status === 'COMPLETED') await db.query("UPDATE bike_posts SET status = 'SOLD' WHERE post_id = ?", [order.post_id]);
+    if (status === 'CANCELLED') await db.query("UPDATE bike_posts SET status = 'AVAILABLE' WHERE post_id = ?", [order.post_id]);
+
+    return res.json({ success: true, message: 'Cập nhật thành công' });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Lỗi server' });
+  }
+};
+
+// GET /api/orders/by-post/:post_id — Tìm đơn hàng theo mã bài đăng (Dùng cho người bán)
+exports.getOrderByPostId = async (req, res) => {
+  const { post_id } = req.params;
+  const user_id = req.user.user_id;
+
+  try {
+    const [rows] = await db.query(
+      `SELECT 
+         o.*, 
+         bp.title AS bike_title, bp.seller_id,
+         u_buyer.name AS buyer_name, u_buyer.email AS buyer_email,
+         u_seller.name AS seller_name, u_seller.email AS seller_email,
+         (SELECT image_url FROM bike_images WHERE post_id = bp.post_id LIMIT 1) AS image_url
+       FROM orders o
+       JOIN bike_posts bp ON o.post_id = bp.post_id
+       JOIN users u_buyer ON o.buyer_id = u_buyer.user_id
+       JOIN users u_seller ON bp.seller_id = u_seller.user_id
+       WHERE o.post_id = ? AND o.status != 'CANCELLED'
+       ORDER BY o.created_at DESC LIMIT 1`,
+      [post_id]
+    );
+
+    if (rows.length === 0) return res.status(404).json({ success: false, message: 'Không tìm thấy đơn hàng cho bài đăng này' });
+    const order = rows[0];
+
+    // Tách chuỗi shipping_address: "Tên - SĐT - Địa chỉ"
+    const addrParts = order.shipping_address.split(' - ');
+    order.display_name = addrParts[0] || order.buyer_name;
+    order.display_phone = addrParts[1] || 'Chưa cập nhật';
+    order.display_address = addrParts[2] || order.shipping_address;
+
+    if (order.seller_id !== user_id) {
+      return res.status(403).json({ success: false, message: 'Bạn không có quyền xem đơn hàng này' });
+    }
+    return res.json({ success: true, message: 'OK', data: order });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Lỗi server' });
+  }
+};
