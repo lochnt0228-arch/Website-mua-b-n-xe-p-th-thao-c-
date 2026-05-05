@@ -1,237 +1,435 @@
-# 🚲 Bike Marketplace - Nền Tảng Chợ Mua Bán Xe Đạp Thể Thao (C2C)
+﻿# 🚲 Website Mua Bán Xe Đạp Thể Thao Cũ – Phân Công & Hướng Dẫn
 
-Dự án này là nền tảng thương mại điện tử hoạt động theo mô hình **C2C (Consumer-to-Consumer)**. Bất kỳ người dùng nào sau khi đăng nhập và được xác thực lưu trong hệ thống đều có quyền trở thành **Người mua (Buyer)** hoặc **Người bán (Seller)**.
-
-Dự án được thiết kế với kiến trúc Monorepo, đề cao tính toàn vẹn của dữ liệu giao dịch và tính bảo mật định danh người dùng.
+Dự án là nền tảng chợ mua bán xe đạp cũ theo mô hình **C2C (Consumer-to-Consumer)**. Bất kỳ người dùng nào sau khi đăng ký và đăng nhập đều có thể trở thành **Người bán** hoặc **Người mua**.
 
 ---
 
-## 🛠 1. Công Nghệ Sử Dụng (Tech Stack)
+## 1. Phân Công Công Việc
 
-### Frontend: HTML5, CSS3, Vanilla JavaScript
-* **Ưu điểm:** Nhẹ, không phụ thuộc framework, giúp rèn luyện tư duy xử lý DOM trực tiếp và tương tác API nguyên thủy. Dễ dàng để các thành viên BE đọc hiểu và hỗ trợ chéo.
-* **Khuyết điểm:** Đòi hỏi kỷ luật chia file JS nghiêm ngặt để tránh code rối (Spaghetti code).
-* **Nguồn tham khảo:** *MDN Web Docs.*
+Dự án được phân chia thành 3 phần chính để tránh xung đột code:
 
-### Backend: Node.js, Express.js v5, MySQL
-* **Ưu điểm:** Node.js xử lý I/O không đồng bộ ưu việt. Cơ sở dữ liệu quan hệ MySQL đảm bảo tính ACID, cực kỳ quan trọng để xử lý các giao dịch mua bán, bảo toàn dữ liệu đơn hàng an toàn.
-* **Khuyết điểm:** Phải cẩn trọng với các lỗ hổng SQL Injection và bảo mật API. Lưu ý: **Express v5** có một số thay đổi so với v4 (async error handling tự động, thay đổi routing).
-* **Nguồn tham khảo:** *Node.js Official Documentation, MySQL 8.0 Reference Manual, Express.js v5 Migration Guide.*
+### **BE 1 – Xác Thực & Quản Lý Người Dùng**
+**Phụ trách:** Đăng ký, đăng nhập, quản lý profile, bảo mật
+
+**Nhiệm vụ chính:**
+- API đăng ký (`POST /api/auth/register`)
+- API đăng nhập (`POST /api/auth/login`) – cấp JWT token
+- API lấy profile (`GET /api/users/profile`)
+- API cập nhật profile (`PUT /api/users/profile`)
+- Hash mật khẩu bằng **bcrypt**
+- Xác thực JWT cho các route bảo mật
+- Validate dữ liệu input
+
+**File chính:**
+- `backend/controllers/authController.js`
+- `backend/controllers/userController.js`
+- `backend/routes/authRoutes.js`
+- `backend/routes/userRoutes.js`
+- `backend/middleware/authMiddleware.js`
 
 ---
 
-## 📂 2. Cấu Trúc Dự Án (Folder Structure)
+### **BE 2 – Quản Lý Tin Đăng & Catalog**
+**Phụ trách:** Xe đạp, danh mục, thương hiệu, tìm kiếm
 
-```text
-bike-marketplace/
-├── static/                      # Khu vực Client-side (Tài nguyên tĩnh)
-│   ├── assets/                  # CSS, JS, Images, Fonts gốc của Template ClassiGrids
-│   ├── css/
-│   │   └── style.css            # File style tùy chỉnh của nhóm
-│   ├── js/
-│   │   └── api.js               # [CỐT LÕI] Hàm fetch() trung tâm, tự động đính kèm JWT Token
-│   ├── lib/                     # Thư viện bên thứ ba (Third-party)
-│   │   ├── css/                 # Chứa các file CSS của Bootstrap
-│   │   └── js/                  # Chứa các file JS của Bootstrap
-│   ├── index.html               # Trang chủ
-│   ├── about-us.html            # Trang giới thiệu
-│   ├── pricing.html             # Trang bảng giá
-│   └── 404.html                 # Trang lỗi
-│
-├── backend/                     # Khu vực Server-side
-│   ├── database/
-│   │   └── init.sql             # File SQL khởi tạo toàn bộ schema CSDL
-│   ├── src/                     # Mã nguồn xử lý logic của Server
-│   │   ├── server.js            # [Entry Point] Cấu hình Express, đăng ký tất cả Routes
-│   │   ├── db.js                # Khởi tạo MySQL Connection Pool (dùng mysql2/promise)
-│   │   ├── controllers/         # Xử lý business logic cho từng nhóm tính năng
-│   │   │   ├── authController.js
-│   │   │   ├── userController.js
-│   │   │   ├── bikeController.js
-│   │   │   ├── catalogController.js
-│   │   │   └── paymentController.js
-│   │   ├── routes/              # Định nghĩa các API Endpoint
-│   │   │   ├── authRoutes.js        # /api/auth
-│   │   │   ├── userRoutes.js        # /api/users/profile
-│   │   │   ├── bikeRoutes.js        # /api/bikes
-│   │   │   ├── catalogRoutes.js     # /api (catalog/search)
-│   │   │   ├── paymentRoutes.js     # /api/orders
-│   │   │   └── confirmRoutes.js     # /api/payments
+**Nhiệm vụ chính:**
+- API lấy danh sách xe (`GET /api/bikes`)
+- API lấy chi tiết xe (`GET /api/bikes/:id`)
+- API tạo tin đăng (`POST /api/bikes` – JWT)
+- API cập nhật tin (`PUT /api/bikes/:id` – JWT)
+- API xóa tin (`DELETE /api/bikes/:id` – JWT)
+- Lấy danh mục (`GET /api`)
+- Lấy thương hiệu (`GET /api/brands`)
+- Thống kê (`GET /api/stats`)
+- Xử lý filter, sort, search
+
+**File chính:**
+- `backend/controllers/bikeController.js`
+- `backend/controllers/catalogController.js`
+- `backend/routes/bikeRoutes.js`
+- `backend/routes/catalogRoutes.js`
+
+---
+
+### **BE 3 – Đơn Hàng & Thanh Toán**
+**Phụ trách:** Tạo đơn, quản lý trạng thái, thanh toán
+
+**Nhiệm vụ chính:**
+- API tạo đơn hàng (`POST /api/orders` – JWT)
+- API lấy đơn hàng (`GET /api/orders/my` – JWT)
+- API lấy chi tiết (`GET /api/orders/:order_id` – JWT)
+- API cập nhật trạng thái (`PUT /api/orders/:order_id/status` – JWT)
+- API hủy đơn (`DELETE /api/orders/:order_id` – JWT)
+- API xác nhận thanh toán (`POST /api/payments/:payment_id/confirm`)
+- Xử lý callback từ cổng thanh toán
+
+**File chính:**
+- `backend/controllers/paymentController.js`
+- `backend/routes/paymentRoutes.js`
+- `backend/routes/confirmRoutes.js`
+
+---
+
+### **FE – Giao Diện Người Dùng**
+**Phụ trách:** HTML, CSS, JavaScript, tương tác với API
+
+**Nhiệm vụ chính:**
+- Trang đăng nhập / đăng ký
+- Trang chủ, danh sách xe
+- Trang chi tiết sản phẩm
+- Trang bán xe (tạo tin đăng)
+- Quản lý tin của tôi
+- Giỏ hàng / checkout
+- Quản lý đơn hàng
+- Upload ảnh sản phẩm
+- Kết nối Socket.IO cho real-time updates
+- Lưu JWT vào localStorage
+
+**File chính:**
+- `static/js/api.js` – wrapper gọi API + JWT
+- `static/js/auth.js` – xử lý đăng nhập/đăng ký
+- `static/js/index.js` – trang chủ
+- `static/js/product-details.js` – chi tiết sản phẩm
+- `static/js/sell.js` – tạo tin đăng
+- `static/js/my-ads.js` – quản lý tin
+- `static/js/checkout.js` – thanh toán
+- `static/js/my-orders.js` – quản lý đơn
+
+---
+
+
+## 2. Cấu Trúc Dự Án
+
+```
+./
+├── backend/
+│   ├── src/
+│   │   ├── server.js                 # Entry point
+│   │   ├── db.js                     # MySQL connection pool
+│   │   ├── controllers/
+│   │   │   ├── authController.js     # BE 1
+│   │   │   ├── userController.js     # BE 1
+│   │   │   ├── bikeController.js     # BE 2
+│   │   │   ├── catalogController.js  # BE 2
+│   │   │   ├── imageController.js    # Upload ảnh
+│   │   │   └── paymentController.js  # BE 3
+│   │   ├── routes/
+│   │   │   ├── authRoutes.js         # BE 1
+│   │   │   ├── userRoutes.js         # BE 1
+│   │   │   ├── bikeRoutes.js         # BE 2
+│   │   │   ├── catalogRoutes.js      # BE 2
+│   │   │   ├── imageRoutes.js        # Upload ảnh
+│   │   │   ├── paymentRoutes.js      # BE 3
+│   │   │   └── confirmRoutes.js      # BE 3
 │   │   └── middleware/
-│   │       └── authMiddleware.js    # Xác thực JWT, gắn req.user cho các route bảo mật
-│   ├── .env                     # [BẢO MẬT] Không commit - xem hướng dẫn cài đặt bên dưới
-│   ├── .env.example             # Mẫu biến môi trường - commit file này lên Git
-│   └── package.json             # Quản lý thư viện (Express v5, MySQL2, Bcrypt, JWT, dotenv)
+│   │       ├── authMiddleware.js     # Xác thực JWT
+│   │       └── uploadMiddleware.js   # Xử lý upload ảnh
+│   ├── database/
+│   │   └── init.sql                  # Schema database
+│   ├── Dockerfile
+│   ├── package.json
+│   ├── .env.example
+│   
 │
-├── .gitignore                   # Chặn node_modules, .env và các file rác
-├── LICENSE                      # Giấy phép MIT
-└── README.md                    # Tài liệu hướng dẫn dự án
+├── static/                           # Frontend tĩnh
+│   ├── assets/                       # CSS, fonts, images gốc
+│   ├── css/
+│   │   └── style.css                 # CSS tùy chỉnh
+│   ├── js/
+│   │   ├── api.js                    # [CỐT LÕI] Wrapper gọi API + JWT
+│   │   ├── auth.js                   # Xử lý auth
+│   │   ├── index.js                  # Trang chủ
+│   │   ├── product-details.js        # Chi tiết sản phẩm
+│   │   ├── sell.js                   # Tạo tin đăng
+│   │   ├── my-ads.js                 # Quản lý tin
+│   │   ├── checkout.js               # Thanh toán
+│   │   └── my-orders.js              # Quản lý đơn
+│   ├── includes/
+│   │   ├── header.php                # Header chung
+│   │   └── footer.php                # Footer chung
+│   └── *.php                         # Các trang
+│
+├── uploads/                          # Ảnh upload từ users
+├── docker-compose.yml                # Docker config
+└── README.md                         # Tài liệu dự án
 ```
-
-> ⚠️ **Lưu ý:** File `be3.js` ở thư mục gốc là file **nháp tham khảo** minh hoạ logic Transaction cho BE3, **không phải** file chạy thực tế. Entry point duy nhất của server là `backend/src/server.js`.
 
 ---
 
-## ⚙️ 3. Hướng Dẫn Cài Đặt & Chạy Dự Án
+## 3. Công Nghệ Sử Dụng
 
-### Yêu cầu hệ thống
-* Node.js >= 18.x
-* MySQL >= 8.0
+### **Frontend**
+- **HTML5 + CSS3 + JavaScript** (Vanilla)
+- **Bootstrap** – Framework CSS
+- **Fetch API** – Gọi API backend
+- **localStorage** – Lưu JWT token
 
-### Các bước thực hiện
+### **Backend**
+- **Node.js** v18+
+- **Express.js** v5 – Web framework
+- **MySQL** v8+ – Database quan hệ
+- **mysql2/promise** – Driver MySQL
+- **bcrypt** – Hash mật khẩu
+- **jsonwebtoken** – JWT authentication
+- **multer** – Upload ảnh
+- **dotenv** – Quản lý biến môi trường
+- **Docker** – Containerization
 
-**Bước 1: Clone repository và cài đặt thư viện**
-```bash
-git clone <url-repository>
-cd bike-marketplace/backend
-npm install
-```
-
-**Bước 2: Cấu hình biến môi trường**
-
-Sao chép file mẫu và điền thông tin thực tế:
-```bash
-cp .env.example .env
-```
-
-Nội dung file `.env` cần có:
-```env
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_password
-DB_NAME=bike_marketplace
-JWT_SECRET=your_super_secret_key
-PORT=5000
-```
-
-**Bước 3: Khởi tạo cơ sở dữ liệu**
-```bash
-mysql -u root -p < database/init.sql
-```
-
-**Bước 4: Khởi động server**
-```bash
-node src/server.js
-```
-
-Truy cập ứng dụng tại: `http://localhost:5000`
+### **Lý do chọn công nghệ này**
+✅ JavaScript toàn stack → dễ chia việc, dễ debug  
+✅ Express nhẹ, dễ học, phù hợp đồ án  
+✅ MySQL đảm bảo ACID cho giao dịch mua bán  
+✅ Docker giúp chạy uniform trên mọi máy  
+✅ JWT đơn giản, không cần session backend  
 
 ---
 
-## 🗄️ 4. Thiết Kế Cơ Sở Dữ Liệu
+## 4. API Contracts (Hợp Đồng API)
 
-Tên database: `bike_marketplace`. Schema gồm 3 nhóm bảng chính:
+### **Xác Thực – BE 1**
+```
+POST /api/auth/register
+POST /api/auth/login
+```
 
-**Nhóm Core (Tài khoản & Danh mục)**
-* `users` — Tài khoản người dùng. Cột mật khẩu đặt tên `password_hash` để nhắc bắt buộc phải băm (bcrypt) trước khi lưu. Role: `ADMIN` | `USER`.
-* `categories` — Danh mục xe (MTB, Road, City, Fixie).
-* `brands` — Thương hiệu (Trek, Specialized, Giant, Asama...).
+### **Người Dùng – BE 1**
+```
+GET  /api/users/profile
+PUT  /api/users/profile
+```
 
-**Nhóm Catalog (Tin đăng & Tương tác)**
-* `bike_posts` — Tin đăng bán xe. Khoá ngoại tới `seller_id`, `category_id`, `brand_id`. Status: `AVAILABLE` | `PENDING` | `SOLD` | `HIDDEN`. Giá dùng `DECIMAL(15,0)` để tránh sai số số thực với VNĐ.
-* `wishlists` — Danh sách yêu thích của người mua (composite PK).
-* `offers` — Bảng trả giá (counter-offer) giữa buyer và seller.
+### **Tin Đăng – BE 2**
+```
+GET    /api/bikes
+GET    /api/bikes/:id
+POST   /api/bikes              (JWT)
+PUT    /api/bikes/:id          (JWT)
+DELETE /api/bikes/:id          (JWT)
+```
 
-**Nhóm Business (Giao dịch & Thanh toán)**
-* `orders` — Đơn hàng. Liên kết `buyer_id` ↔ `post_id`. Status: `PENDING` | `PAID` | `SHIPPING` | `COMPLETED` | `CANCELLED`.
-* `payments` — Thanh toán. Hỗ trợ: `COD` | `VNPAY` | `BANK_TRANSFER`.
-* `inspection_reports` — Biên bản kiểm định xe trước giao dịch.
-* `reviews` — Đánh giá sau giao dịch (buyer đánh giá seller và ngược lại).
+### **Upload Ảnh – BE 2**
+```
+POST   /api/bikes/:id/images        (JWT)
+DELETE /api/bikes/:id/images/:imgId (JWT)
+```
 
----
+### **Danh Mục & Thương Hiệu – BE 2**
+```
+GET /api
+GET /api/brands
+GET /api/stats
+```
 
-## 🔄 5. Quy Trình Làm Việc Git (Cẩm nang nội bộ)
+### **Đơn Hàng – BE 3**
+```
+POST   /api/orders                   (JWT)
+GET    /api/orders/my                (JWT)
+GET    /api/orders/:order_id         (JWT)
+PUT    /api/orders/:order_id/status  (JWT)
+DELETE /api/orders/:order_id         (JWT)
+```
 
-Nhóm thống nhất sử dụng quy trình gộp code trực tiếp (Local Merge). Các thành viên thực hiện nghiêm ngặt theo vòng lặp 5 bước sau:
+### **Thanh Toán – BE 3**
+```
+POST /api/payments/:payment_id/confirm  (Callback)
+```
 
-* **Bước 1: Chuyển sang nhánh cá nhân**
-    Trước khi bắt đầu gõ code, hãy chắc chắn bạn đang ở nhánh của riêng mình.
-    * Lệnh: `git checkout ten-nhanh-cua-ban` *(Ví dụ: `git checkout TienLoc`)*
-
-* **Bước 2: Lưu lại công việc (Commit)**
-    Sau khi hoàn thành tính năng, tiến hành lưu lại code trên nhánh cá nhân.
-    * Lệnh 1: `git add .`
-    * Lệnh 2: `git commit -m "Nội dung công việc đã làm"`
-
-* **Bước 3: Gộp code vào nhánh chính (Merge)**
-    Chuyển về nhánh chính để gộp code.
-    * Lệnh 1: `git checkout main`
-    * Lệnh 2: `git merge ten-nhanh-cua-ban` *(Ví dụ: `git merge TienLoc`)*
-
-* **Bước 4: Đẩy code lên hệ thống (Push)**
-    Sau khi gộp thành công, đẩy toàn bộ code mới nhất lên kho lưu trữ chung.
-    * Lệnh: `git push origin main`
-
-* **Bước 5: Lấy code mới nhất về (Pull)**
-    **Tuyệt đối ghi nhớ:** Lần làm việc tiếp theo, trước khi code bao giờ cũng phải lấy code mới nhất từ `main` về máy.
-    * Lệnh 1: `git checkout main`
-    * Lệnh 2: `git pull origin main`
-
-*(Hoàn thành Bước 5, quay lại Bước 1 để làm tính năng mới).*
-
----
-
-## 👥 6. Phân Công Nhiệm Vụ & Ràng Buộc (Contracts)
-
-Để đảm bảo tính toàn vẹn của mô hình Marketplace C2C, toàn bộ team bắt buộc tuân thủ các quy tắc sau.
-
-### 📑 Quy chuẩn API (Bắt buộc toàn team)
-
-**Mọi phản hồi từ Backend phải đúng định dạng JSON sau:**
+### **Format Response (Bắt buộc toàn team)**
 ```json
 // Thành công
-{ "success": true, "message": "Thông báo", "data": { } }
+{ "success": true, "message": "...", "data": { } }
 
 // Thất bại
 { "success": false, "message": "Lý do lỗi", "data": null }
 ```
-> ❌ **Không dùng** `{ "error": "..." }` hay bất kỳ định dạng nào khác. Mọi response đều phải có đủ 3 trường `success`, `message`, `data`.
 
 ---
 
-### A. Nhóm Backend (3 Thành viên)
+## 🚀 Hướng Dẫn Cài Đặt & Chạy Dự Án
 
-**1. BE 1 (Core & Security): Xác thực & Định danh**
-* **Files phụ trách:** `controllers/authController.js`, `controllers/userController.js`, `routes/authRoutes.js`, `routes/userRoutes.js`
-* **API Endpoints:** `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/users/profile`
-* **Ràng buộc bảo mật:**
-    * Bắt buộc mã hóa password bằng `bcrypt` trước khi insert vào DB (lưu vào cột `password_hash`).
-    * Cấp phát Token qua `jsonwebtoken` (JWT). **Trọng tâm:** Payload của Token bắt buộc chứa `user_id` và `role`.
-    * Chống SQL Injection triệt để bằng **Prepared Statements** (dùng dấu `?` trong query).
+### **Yêu Cầu Hệ Thống**
+- **Node.js**: v18+
+- **MySQL**: v8+
+- **NPM**: v6+
+- **Docker**: (optional, nhưng khuyến khích)
+- **Trình duyệt**: Chrome, Firefox, Edge (mới nhất)
 
-**2. BE 2 (Marketplace Catalog): Luồng Đăng Bán & Tìm Kiếm**
-* **Files phụ trách:** `controllers/bikeController.js`, `controllers/catalogController.js`, `routes/bikeRoutes.js`, `routes/catalogRoutes.js`
-* **API Endpoints:** `POST /api/bikes`, `GET /api/bikes`, `PUT /api/bikes/:id`, `DELETE /api/bikes/:id`
-* **Ràng buộc (Bảo mật tuyệt đối):**
-    * Khi tạo tin đăng (`POST /api/bikes`), **tuyệt đối KHÔNG lấy `seller_id` từ `req.body`**. Middleware phải tự động giải mã JWT Token từ `authMiddleware`, trích xuất `req.user.user_id` và gán làm `seller_id`. (Ngăn chặn hacker mạo danh người bán).
-    * Bảng trong DB là **`bike_posts`** (không phải `bikes`). Status hợp lệ: `AVAILABLE`, `PENDING`, `SOLD`, `HIDDEN`.
-    * API `GET` danh sách xe bắt buộc có Phân trang (Pagination) qua `LIMIT` và `OFFSET`.
+### **Cách 1: Chạy bằng Docker Compose (Khuyến khích)**
 
-**3. BE 3 (Business Logic): Luồng Mua Hàng & Thanh Toán**
-* **Files phụ trách:** `controllers/paymentController.js`, `routes/paymentRoutes.js`, `routes/confirmRoutes.js`
-* **API Endpoints:** `POST /api/orders`, `GET /api/orders/my`, `DELETE /api/orders/:id`, `POST /api/payments/:payment_id/confirm`
-* **Ràng buộc (Tử huyệt):**
-    * Phải lấy `buyer_id` tự động từ `req.user.user_id` (JWT), không từ body.
-    * Tham chiếu DB qua `require('../db')` (path tương đối từ `src/`), **không phải** `../../shared/db`.
-    * Thao tác đặt hàng bắt buộc dùng **MySQL Transactions** (`beginTransaction`, `COMMIT`, `ROLLBACK`). Việc ghi vào `orders` và cập nhật `bike_posts` phải xảy ra trong cùng một transaction. Nếu một bước lỗi, phải Rollback toàn bộ.
-    * Khoá dòng khi kiểm tra tồn kho bằng `SELECT ... FOR UPDATE` để tránh race condition.
+```bash
+# 1. Clone dự án
+git clone <repository-url>
+cd "Website mua ban xe dap the thao cu"
+
+# 2. Build & chạy
+docker compose up --build -d
+
+# 3. Truy cập : http://localhost:8080
+
+```
+
+### **Cách 2: Chạy Local (Development)**
+
+```bash
+# 1. Cài đặt dependencies backend
+cd backend
+npm install
+
+# 2. Sao chép biến môi trường
+cp .env.example .env
+
+# 3. Chỉnh sửa .env theo MySQL của bạn
+# DB_HOST=localhost
+# DB_USER=root
+# DB_PASSWORD=your_password
+# DB_NAME=bike_marketplace
+
+# 4. Khởi tạo database
+mysql -u root -p < database/init.sql
+
+# 5. Chạy server
+npm start
+
+# Server chạy tại http://localhost:5000
+```
+
+
+## 🔧 Biến Môi Trường (.env)
+
+Sao chép `backend/.env.example` thành `backend/.env`:
+
+```env
+# Server
+PORT=5000
+
+# Database
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=bike_marketplace
+
+# JWT
+JWT_SECRET=your_super_secret_key_here_minimum_32_chars
+JWT_EXPIRES_IN=1d
+
+# Upload
+MAX_FILE_SIZE_MB=5
+MAX_FILES_PER_POST=5
+```
 
 ---
 
-### B. Nhóm Frontend (2 Thành viên)
+## 📖 Hướng Dẫn Sử Dụng Website
 
-**1. FE 1 (Base & User Entity): Kiến trúc nền & Tài khoản**
-* **Files phụ trách:** `static/js/api.js` và các file HTML liên quan đến auth
-* **Nhiệm vụ:** Thiết lập UI/UX nền tảng và xử lý logic gọi API Auth.
-* **Ràng buộc:**
-    * Lưu trữ Token vào `localStorage` (hoặc `sessionStorage`).
-    * Tự động gắn header `Authorization: Bearer <token>` vào mọi request bảo mật thông qua hàm `fetch()` được cấu hình chung trong `static/js/api.js`.
-    * **Bảo vệ Route:** Tự động đá văng người dùng chưa đăng nhập ra khỏi các trang nhạy cảm (Form đăng bán, trang quản lý đơn hàng).
+### **1. Đăng Ký & Đăng Nhập**
+- Tạo tài khoản mới tại `localhost:8080/register.php`
+- Email dùng để khôi phục mật khẩu
+- Password tối thiểu 6 ký tự
 
-**2. FE 2 (C2C Flow): Trải nghiệm Mua & Bán**
-* **Files phụ trách:** `static/index.html`, các trang listing và form đăng tin
-* **Nhiệm vụ:** Xây dựng UI/UX cho trang danh sách xe và form đăng tin.
-* **Ràng buộc:**
-    * UI phải hiển thị rõ ràng trạng thái sở hữu (*"Xe này đang được bán bởi: [Tên User]"*).
-    * Thanh tìm kiếm bắt buộc dùng kỹ thuật **Debounce** (delay ~300ms) để chống spam API.
-    * Khi bấm các nút gọi API quan trọng ("Đăng bán", "Đặt mua"), trạng thái nút phải lập tức chuyển sang Disabled/Loading. Chặn lỗi bấm đúp (double-click) sinh nhiều request.
+### **2. Trang Chủ & Tìm Kiếm**
+- Xem danh sách xe đạp các loại
+- Filter theo danh mục, giá, thương hiệu
+- Tìm kiếm theo từ khóa
+
+### **3. Tạo Tin Đăng Bán**
+- Click "Bán Xe" hoặc "Đăng Tin Mới"
+- Điền thông tin: tên, mô tả, giá, điều kiện
+- Upload 1-5 ảnh sản phẩm
+- Chọn danh mục & thương hiệu
+- Nhấn "Đăng Bán"
+
+### **4. Quản Lý Tin Của Tôi**
+- Xem danh sách tin đang bán
+- Chỉnh sửa giá, mô tả
+- Ẩn / xóa tin
+- Xem lịch sử lượt xem
+
+### **5. Mua Xe**
+- Tìm xe cần mua
+- Xem chi tiết & hình ảnh
+- Click "Mua Ngay" hoặc "Chat Người Bán"
+- Hoàn tất thanh toán
+
+### **6. Quản Lý Đơn Hàng**
+- Xem tất cả đơn mua / bán
+- Cập nhật trạng thái: chờ xác nhận → đã gửi → đã nhận
+- Đánh giá người bán
+- Xem lịch sử giao dịch
+
+---
+
+## 🔒 Tính Năng Bảo Mật
+
+### **Authentication & Authorization**
+✅ Mật khẩu hash bằng **bcrypt** (10 rounds)  
+✅ JWT token xác thực (hết hạn sau 24h)  
+✅ Middleware kiểm tra token cho mọi route bảo mật  
+✅ Không lưu password plain text  
+
+### **Anti-Cheat & Server-Side Validation**
+✅ Kiểm tra người dùng hợp lệ  
+✅ Xác minh quyền sở hữu tin đăng  
+✅ Validate giá tiền (tránh giá âm)  
+✅ Kiểm tra upload ảnh (định dạng, kích thước)  
+✅ Server có quyền cuối cùng trong mọi quyết định  
+
+### **Database Security**
+✅ Prepared Statements (tránh SQL Injection)  
+✅ Connection pooling cho hiệu suất  
+✅ Backup thường xuyên  
+
+### **API Security**
+✅ CORS cấu hình chặt chẽ  
+✅ Rate limiting (trong production)  
+✅ Input sanitization  
+✅ HTTPS (khi deploy lên production)  
+
+---
+
+
+## 📊 Luật Giao Dịch & Quy Định
+
+### **Đối với Người Bán**
+- Mô tả hàng **chính xác, chi tiết**
+- Upload ảnh **chất lượng, rõ ràng**
+- Giá **hợp lý** so với thị trường
+- Phản hồi **nhanh** tin nhắn từ người mua
+
+### **Đối với Người Mua**
+- **Xác nhận thanh toán** sau khi nhận hàng
+- **Đánh giá công bằng** (5 sao nếu tốt, 1 sao nếu tệ)
+- **Báo cáo gian lận** nếu hàng không đúng với mô tả
+
+### **Tranh Chấp**
+- Nếu xảy ra tranh chấp, cả 2 bên liên hệ admin
+- Admin sẽ xem xét bằng chứng (hình ảnh, tin nhắn)
+- Quyết định cuối cùng của admin là chính thức
+
+---
+
+## 👥 Bảng Phân Công Thành Viên
+
+| STT | Họ và Tên | Vai Trò | Phần Việc Chính | File Chính |
+|-----|-----------|---------|-----------------|-----------|
+| 1 | Huỳnh Nguyễn Tiến Lộc | **BE 1 + BE 2** | Auth + Profile và Bike + Catalog | `authController.js`, `userController.js`, `bikeController.js`, `catalogController.js` |
+| 2 | Nguyễn Hoàng Nam | **BE 3** | Orders + Payment | `paymentController.js` |
+| 3 | Nguyễn Thụy Thúy Vy | **FE** | UI + JavaScript | `static/js/*.js` |
+| 4 | Huỳnh Nguyễn Tiến Lộc + NGuyễn Thụy Thúy Vy | **Check dự án ** | Liên kết tất cả module và đảm bảo hệ thống chạy hoàn chỉnh. 
+
+---
+
+## 📝 Ghi Chú Quan Trọng
+
+- **Backend chạy từ**: `backend/src/server.js`
+- **Frontend tĩnh**: `static/` (PHP/HTML/CSS/JS)
+- **Database schema**: `backend/database/init.sql`
+- **Ảnh upload**: `uploads/` (tự động tạo)
+- **Docker MySQL**: user `root`, password `123`, database `bike_marketplace`
+- **JWT expires**: 24 giờ (có thể chỉnh trong `.env`)
+- **Max file size**: 5MB/ảnh (chỉnh MAX_FILE_SIZE_MB)
+
+---
+
+**Dự án được cập nhật**: 2025-05-05  
+**Phiên bản**: v1.0  
+**Giấy phép**: Xem file `LICENSE`
