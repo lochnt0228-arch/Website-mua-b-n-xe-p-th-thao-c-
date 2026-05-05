@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const formData = new FormData();
                     // Lưu ý: field name phải là 'images' đúng như backend multer mong đợi
                     Array.from(files).slice(0, 5).forEach(file => {
-                        formData.append('images', file);
+                        formData.append('images[]', file);
                     });
 
                     // Gọi API upload (cần dùng FormData nên không dùng được api.post mặc định nếu api.js chưa hỗ trợ multipart)

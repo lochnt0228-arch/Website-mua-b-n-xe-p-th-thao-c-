@@ -2,7 +2,6 @@
  * ========================================
  * MY-ADS.JS - Quản lý tin đăng của tôi
  * ========================================
- * Lấy toàn bộ xe AVAILABLE rồi lọc client-side theo user_id
  */
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     let user = auth.getCurrentUser();
     
-    // Nếu chưa có user info hoặc thiếu user_id → fetch lại từ server
     if (!user || !user.user_id) {
         if (auth.isAuthenticated()) {
             await auth.fetchProfile();
@@ -25,11 +23,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     try {
-        // Lấy toàn bộ xe (limit lớn) rồi lọc phía client theo seller
-        const result = await api.get('/api/bikes?limit=50');
+        // Gọi với status=ALL để thấy cả tin đã bán/ẩn
+        const result = await api.get('/api/bikes?limit=100&status=ALL');
         
         if (result.success && result.data && result.data.bikes) {
-            // Lọc phía client: so sánh theo tên người bán (vì API không trả seller_id)
             const myBikes = result.data.bikes.filter(bike => bike.seller_name === user.name);
             
             if (myBikes.length === 0) {
@@ -43,10 +40,18 @@ document.addEventListener('DOMContentLoaded', async function () {
                 const date = new Date(bike.created_at).toLocaleDateString('vi-VN');
                 
                 let statusBadge = '';
-                if (bike.status === 'AVAILABLE') statusBadge = '<span class="badge bg-success">Đang bán</span>';
-                else if (bike.status === 'PENDING') statusBadge = '<span class="badge bg-warning text-dark">Chờ thanh toán</span>';
-                else if (bike.status === 'SOLD') statusBadge = '<span class="badge bg-danger">Đã bán</span>';
-                else statusBadge = `<span class="badge bg-secondary">${bike.status}</span>`;
+                let actionBtn = '';
+
+                if (bike.status === 'AVAILABLE') {
+                    statusBadge = '<span class="badge bg-success">Đang bán</span>';
+                    actionBtn = `<a href="product-details.php?id=${bike.post_id}" class="btn btn-sm btn-outline-primary"><i class="lni lni-eye"></i> Xem</a>`;
+                } else {
+                    // Nếu không phải AVAILABLE, có khả năng đã có đơn hàng
+                    statusBadge = `<span class="badge bg-info">${bike.status === 'SOLD' ? 'Đã bán' : 'Đang giao dịch'}</span>`;
+                    // Chúng ta cần tìm order_id liên quan. Hiện tại API /api/bikes chưa trả về order_id.
+                    // Tạm thời dẫn tới trang chi tiết, sau này có thể mở rộng API.
+                    actionBtn = `<a href="manage-order.php?post_id=${bike.post_id}" class="btn btn-sm btn-warning"><i class="lni lni-cog"></i> Quản lý đơn</a>`;
+                }
 
                 const bikeImg = bike.image_url ? bike.image_url : `assets/images/items-grid/img${(idx % 6) + 1}.jpg`;
 
@@ -59,15 +64,15 @@ document.addEventListener('DOMContentLoaded', async function () {
                         <td>${statusBadge}</td>
                         <td>${date}</td>
                         <td>
-                            <a href="product-details.php?id=${bike.post_id}" class="btn btn-sm btn-outline-primary" title="Xem chi tiết"><i class="lni lni-eye"></i> Xem</a>
+                            <div class="d-flex gap-1">
+                                ${actionBtn}
+                            </div>
                         </td>
                     </tr>
                 `;
             });
 
             listContainer.innerHTML = html;
-        } else {
-            listContainer.innerHTML = '<tr><td colspan="7" class="text-center text-danger">Lỗi: Không thể lấy dữ liệu.</td></tr>';
         }
     } catch (error) {
         listContainer.innerHTML = '<tr><td colspan="7" class="text-center text-danger">Lỗi kết nối máy chủ.</td></tr>';

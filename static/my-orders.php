@@ -18,10 +18,10 @@
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Mã Đơn</th>
-                                                <th>Tên Sản Phẩm</th>
+                                                <th>Sản Phẩm</th>
+                                                <th>Người Bán</th>
                                                 <th>Tổng Tiền</th>
-                                                <th>Phương Thức</th>
-                                                <th>Trạng Thái Đơn</th>
+                                                <th>Trạng Thái</th>
                                                 <th>Ngày Đặt</th>
                                                 <th>Hành Động</th>
                                             </tr>
@@ -44,7 +44,8 @@
     <?php include 'includes/footer.php'; ?>
 
     <!-- Scripts -->
-    <script src="lib/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>

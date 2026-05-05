@@ -63,9 +63,15 @@ if ($method === 'POST' || $method === 'PUT' || $method === 'PATCH') {
             if (is_array($file['tmp_name'])) {
                 foreach ($file['tmp_name'] as $index => $tmpName) {
                     if (!empty($tmpName)) {
-                        // Gửi nhiều file với cùng một field name (vd: images)
-                        // PHP cURL hỗ trợ mảng này bằng cú pháp images[0], images[1]... nhưng phải khớp logic BE
-                        $postData[$key . '[' . $index . ']'] = new CURLFile($tmpName, $file['type'][$index], $file['name'][$index]);
+                        // Nếu tên key có [], cURL cần định dạng key[0], key[1]...
+                        $curlKey = $key;
+                        if (substr($key, -2) === '[]') {
+                            $baseKey = substr($key, 0, -2);
+                            $curlKey = $baseKey . '[' . $index . ']';
+                        } else {
+                            $curlKey = $key . '[' . $index . ']';
+                        }
+                        $postData[$curlKey] = new CURLFile($tmpName, $file['type'][$index], $file['name'][$index]);
                     }
                 }
             } else {

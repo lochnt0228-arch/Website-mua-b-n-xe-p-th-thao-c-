@@ -92,7 +92,6 @@
                             <div class="single-block author">
                                 <h3>Thông tin Người Bán</h3>
                                 <div class="content">
-                                    <img src="https://via.placeholder.com/150" alt="#">
                                     <h4 id="pd-seller-name">Đang tải...</h4>
                                     <span>Người bán cá nhân</span>
                                     <a href="javascript:void(0)" class="see-all">Xem tất cả bài đăng</a>

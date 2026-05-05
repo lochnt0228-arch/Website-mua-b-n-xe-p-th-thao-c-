@@ -20,16 +20,13 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
 
             const localImages = ['assets/images/items-grid/img1.jpg','assets/images/items-grid/img2.jpg','assets/images/items-grid/img3.jpg','assets/images/items-grid/img4.jpg','assets/images/items-grid/img5.jpg','assets/images/items-grid/img6.jpg'];
-            const authorImages = ['assets/images/items-grid/author-1.jpg','assets/images/items-grid/author-2.jpg','assets/images/items-grid/author-3.jpg','assets/images/items-grid/author-4.jpg','assets/images/items-grid/author-5.jpg','assets/images/items-grid/author-6.jpg'];
-
+            
             let html = '';
             bikes.forEach((bike, idx) => {
                 const formatPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(bike.price);
                 const date = new Date(bike.created_at).toLocaleDateString('vi-VN');
                 
-                // Ưu tiên dùng ảnh thật từ server, nếu không có mới dùng placeholder
                 const bikeImg = bike.image_url ? bike.image_url : localImages[idx % localImages.length];
-                const avatarImg = authorImages[idx % authorImages.length];
                 
                 html += `
                     <div class="col-lg-4 col-md-6 col-12 mb-4">
@@ -41,11 +38,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                                 <div class="author">
                                     <div class="author-image">
                                         <a href="javascript:void(0)">
-                                            <img src="${avatarImg}" alt="#">
                                             <span>Bởi: <strong>${bike.seller_name}</strong></span>
                                         </a>
                                     </div>
-                                    <p class="sale">${bike.status}</p>
+                                    <p class="sale">${bike.status === 'AVAILABLE' ? 'ĐANG BÁN' : 'HẾT HÀNG'}</p>
                                 </div>
                             </div>
                             <div class="content">

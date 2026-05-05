@@ -1,6 +1,6 @@
 // backend/src/routes/bikeRoutes.js
 const express    = require('express');
-const controller = require('../controllers/bikeController');
+const controller = require('../controllers/bikecontroller');
 const auth       = require('../middleware/authMiddleware'); // dùng lại từ BE1
 const router     = express.Router();
 
