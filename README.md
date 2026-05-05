@@ -71,7 +71,7 @@ Dự án được phân chia thành 3 phần chính để tránh xung đột cod
 ---
 
 ### **FE – Giao Diện Người Dùng**
-**Phụ trách:** HTML, CSS, JavaScript, tương tác với API
+**Phụ trách:** HTML, CSS, PHP, JavaScript, tương tác với API
 
 **Nhiệm vụ chính:**
 - Trang đăng nhập / đăng ký
@@ -159,6 +159,7 @@ Dự án được phân chia thành 3 phần chính để tránh xung đột cod
 ## 3. Công Nghệ Sử Dụng
 
 ### **Frontend**
+- **PHP** - Xử lý logic và render HTML
 - **HTML5 + CSS3 + JavaScript** (Vanilla)
 - **Bootstrap** – Framework CSS
 - **Fetch API** – Gọi API backend
@@ -356,33 +357,6 @@ MAX_FILES_PER_POST=5
 - Đánh giá người bán
 - Xem lịch sử giao dịch
 
----
-
-## 🔒 Tính Năng Bảo Mật
-
-### **Authentication & Authorization**
-✅ Mật khẩu hash bằng **bcrypt** (10 rounds)  
-✅ JWT token xác thực (hết hạn sau 24h)  
-✅ Middleware kiểm tra token cho mọi route bảo mật  
-✅ Không lưu password plain text  
-
-### **Anti-Cheat & Server-Side Validation**
-✅ Kiểm tra người dùng hợp lệ  
-✅ Xác minh quyền sở hữu tin đăng  
-✅ Validate giá tiền (tránh giá âm)  
-✅ Kiểm tra upload ảnh (định dạng, kích thước)  
-✅ Server có quyền cuối cùng trong mọi quyết định  
-
-### **Database Security**
-✅ Prepared Statements (tránh SQL Injection)  
-✅ Connection pooling cho hiệu suất  
-✅ Backup thường xuyên  
-
-### **API Security**
-✅ CORS cấu hình chặt chẽ  
-✅ Rate limiting (trong production)  
-✅ Input sanitization  
-✅ HTTPS (khi deploy lên production)  
 
 ---
 
